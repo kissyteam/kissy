@@ -337,38 +337,55 @@ xtemplateRuntimeCommands = function (exports) {
       }
       return ret;
     },
-    each: function (scope, option, buffer) {
+    foreach: function (scope, option, buffer) {
       var params = option.params;
       var param0 = params[0];
       var xindexName = params[2] || 'xindex';
       var valueName = params[1];
-      var xcount;
-      var opScope;
-      var affix;
+      var xcount, opScope, affix, xindex;
+      if (param0) {
+        xcount = param0.length;
+        for (xindex = 0; xindex < xcount; xindex++) {
+          opScope = new Scope(param0[xindex]);
+          affix = opScope.affix = { xcount: xcount };
+          affix[xindexName] = xindex;
+          if (valueName) {
+            affix[valueName] = param0[xindex];
+          }
+          opScope.setParent(scope);
+          buffer = option.fn(opScope, buffer);
+        }
+      }
+      return buffer;
+    },
+    forin: function (scope, option, buffer) {
+      var params = option.params;
+      var param0 = params[0];
+      var xindexName = params[2] || 'xindex';
+      var valueName = params[1];
+      var opScope, affix, name;
+      if (param0) {
+        for (name in param0) {
+          opScope = new Scope(param0[name]);
+          affix = opScope.affix = {};
+          affix[xindexName] = name;
+          if (valueName) {
+            affix[valueName] = param0[name];
+          }
+          opScope.setParent(scope);
+          buffer = option.fn(opScope, buffer);
+        }
+      }
+      return buffer;
+    },
+    each: function (scope, option, buffer) {
+      var params = option.params;
+      var param0 = params[0];
       if (param0) {
         if (util.isArray(param0)) {
-          xcount = param0.length;
-          for (var xindex = 0; xindex < xcount; xindex++) {
-            opScope = new Scope(param0[xindex]);
-            affix = opScope.affix = { xcount: xcount };
-            affix[xindexName] = xindex;
-            if (valueName) {
-              affix[valueName] = param0[xindex];
-            }
-            opScope.setParent(scope);
-            buffer = option.fn(opScope, buffer);
-          }
+          return commands.foreach(scope, option, buffer);
         } else {
-          for (var name in param0) {
-            opScope = new Scope(param0[name]);
-            affix = opScope.affix = {};
-            affix[xindexName] = name;
-            if (valueName) {
-              affix[valueName] = param0[name];
-            }
-            opScope.setParent(scope);
-            buffer = option.fn(opScope, buffer);
-          }
+          return commands.forin(scope, option, buffer);
         }
       }
       return buffer;
@@ -627,7 +644,7 @@ xtemplateRuntime = function (exports) {
   }
   util.mix(XTemplateRuntime, {
     loader: loader,
-    version: '1.3.0',
+    version: '1.4.0',
     nativeCommands: nativeCommands,
     utils: utils,
     util: util,

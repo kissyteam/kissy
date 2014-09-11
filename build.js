@@ -27,6 +27,9 @@ function builds(cs) {
 //}
 
 build('xtemplate', ['xtemplate', 'xtemplate/runtime']);
-builds(['util', 'querystring', 'path', 'ua', 'html-parser', 'json', 'url', 'feature','logger-manager']);
+build('dom', ['dom/base', 'dom/ie']);
+builds(['util', 'querystring', 'path', 'ua', 'html-parser', 'json', 'url',
+    'query-selector',
+    'feature','logger-manager']);
 
 console.log('done');

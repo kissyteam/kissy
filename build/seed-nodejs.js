@@ -26,11 +26,11 @@ var modulex = (function (undefined) {
     var mx = {
         /**
          * The build time of the library.
-         * NOTICE: 'Fri, 05 Sep 2014 03:39:48 GMT' will replace with current timestamp when compressing.
+         * NOTICE: 'Thu, 11 Sep 2014 07:33:56 GMT' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: 'Fri, 05 Sep 2014 03:39:48 GMT',
+        __BUILD_TIME: 'Thu, 11 Sep 2014 07:33:56 GMT',
 
         /**
          * modulex Environment.
@@ -735,7 +735,8 @@ var modulex = (function (undefined) {
         },
 
         getExports: function () {
-            return this.getNormalizedModules()[0].exports;
+            var normalizedModules = this.getNormalizedModules();
+            return normalizedModules[0] && normalizedModules[0].exports;
         },
 
         /**
@@ -885,8 +886,8 @@ var modulex = (function (undefined) {
             if (self.afterInit) {
                 self.afterInit(self);
             }
-            if (Config.afterModInit) {
-                Config.afterModInit(self);
+            if (Config.afterModuleInit) {
+                Config.afterModuleInit(self);
             }
             return 1;
         },
@@ -1313,6 +1314,9 @@ var modulex = (function (undefined) {
 
     configFns.packages = function (config) {
         var packages = Config.packages;
+        if (config === undefined) {
+            return packages;
+        }
         if (config) {
             Utils.each(config, function (cfg, key) {
                 // object type
@@ -1328,13 +1332,11 @@ var modulex = (function (undefined) {
                 }
             });
             return undefined;
-        } else if (config === false) {
+        } else {
             Config.packages = {
                 core: packages.core
             };
             return undefined;
-        } else {
-            return packages;
         }
     };
 
