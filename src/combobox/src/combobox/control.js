@@ -657,6 +657,8 @@ KISSY.add(function (S, require) {
 
         data = self.normalizeData(data);
 
+        menu.set('highlightedItem', null);
+
         menu.removeChildren(true);
 
         if ((highlightedItem = menu.get('highlightedItem'))) {

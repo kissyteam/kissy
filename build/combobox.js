@@ -1,7 +1,7 @@
 /*
-Copyright 2014, KISSY v1.49
+Copyright 2014, KISSY v1.49.10
 MIT Licensed
-build time: May 22 12:16
+build time: Sep 12 10:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -420,6 +420,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
   function renderData(data) {
     var self = this, v, children = [], val, matchVal, highlightedItem, i, menu = self.get("menu");
     data = self.normalizeData(data);
+    menu.set("highlightedItem", null);
     menu.removeChildren(true);
     if(highlightedItem = menu.get("highlightedItem")) {
       highlightedItem.set("highlighted", false)
