@@ -740,6 +740,8 @@ function renderData(data) {
 
     data = self.normalizeData(data);
 
+    menu.set('highlightedItem', null);
+
     menu.removeChildren(true);
 
     if (data && data.length) {

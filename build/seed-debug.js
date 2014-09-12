@@ -26,11 +26,11 @@ var modulex = (function (undefined) {
     var mx = {
         /**
          * The build time of the library.
-         * NOTICE: 'Fri, 05 Sep 2014 03:39:48 GMT' will replace with current timestamp when compressing.
+         * NOTICE: 'Thu, 11 Sep 2014 07:33:56 GMT' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: 'Fri, 05 Sep 2014 03:39:48 GMT',
+        __BUILD_TIME: 'Thu, 11 Sep 2014 07:33:56 GMT',
 
         /**
          * modulex Environment.
@@ -735,7 +735,8 @@ var modulex = (function (undefined) {
         },
 
         getExports: function () {
-            return this.getNormalizedModules()[0].exports;
+            var normalizedModules = this.getNormalizedModules();
+            return normalizedModules[0] && normalizedModules[0].exports;
         },
 
         /**
@@ -885,8 +886,8 @@ var modulex = (function (undefined) {
             if (self.afterInit) {
                 self.afterInit(self);
             }
-            if (Config.afterModInit) {
-                Config.afterModInit(self);
+            if (Config.afterModuleInit) {
+                Config.afterModuleInit(self);
             }
             return 1;
         },
@@ -1313,6 +1314,9 @@ var modulex = (function (undefined) {
 
     configFns.packages = function (config) {
         var packages = Config.packages;
+        if (config === undefined) {
+            return packages;
+        }
         if (config) {
             Utils.each(config, function (cfg, key) {
                 // object type
@@ -1328,13 +1332,11 @@ var modulex = (function (undefined) {
                 }
             });
             return undefined;
-        } else if (config === false) {
+        } else {
             Config.packages = {
                 core: packages.core
             };
             return undefined;
-        } else {
-            return packages;
         }
     };
 
@@ -3031,7 +3033,7 @@ module.exports = {
 };});/*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 26 16:11
+build time: Sep 11 22:18
 */
 /**
  * @ignore
@@ -3052,8 +3054,9 @@ KISSY.config({
     }
 });
 /*jshint indent:false, quotmark:false*/
-KISSY.use(['ua', 'feature'], function(S, UA, Feature){
-S.config("requires",{
+modulex.use(['ua', 'feature'], function(UA, Feature){
+var mx = modulex;
+mx.config("requires",{
     "anim/base": [
         "dom",
         "querystring",
@@ -3068,6 +3071,7 @@ S.config("requires",{
         "feature"
     ],
     "attribute": [
+        "logger-manager",
         "event/custom"
     ],
     "base": [
@@ -3116,6 +3120,7 @@ S.config("requires",{
         "util"
     ],
     "date/format": [
+        "logger-manager",
         "date/gregorian"
     ],
     "date/gregorian": [
@@ -3149,20 +3154,6 @@ S.config("requires",{
     "dd/plugin/scroll": [
         "dd"
     ],
-    "dom/base": [
-        "util",
-        "feature"
-    ],
-    "dom/class-list": [
-        "dom/base"
-    ],
-    "dom/ie": [
-        "dom/base"
-    ],
-    "dom/selector": [
-        "util",
-        "dom/basic"
-    ],
     "editor": [
         "html-parser",
         "component/control"
@@ -3180,6 +3171,7 @@ S.config("requires",{
     "event/dom/base": [
         "event/base",
         "dom",
+        "logger-manager",
         "ua"
     ],
     "event/dom/focusin": [
@@ -3222,25 +3214,17 @@ S.config("requires",{
         "event/dom/base",
         "feature"
     ],
-    "feature": [
-        "ua"
-    ],
     "filter-menu": [
         "menu"
     ],
-    "html-parser": [
-        "util"
-    ],
     "io": [
         "dom",
+        "querystring",
         "event/custom",
         "promise",
         "url",
         "ua",
         "event/dom"
-    ],
-    "json": [
-        "util"
     ],
     "menu": [
         "component/container",
@@ -3273,9 +3257,7 @@ S.config("requires",{
         "component/extension/content-box"
     ],
     "promise": [
-        "util"
-    ],
-    "querystring": [
+        "util",
         "logger-manager"
     ],
     "resizable": [
@@ -3286,6 +3268,7 @@ S.config("requires",{
         "node"
     ],
     "router": [
+        "logger-manager",
         "url",
         "event/dom",
         "event/custom",
@@ -3337,12 +3320,18 @@ S.config("requires",{
         "component/extension/content-box",
         "component/extension/delegate-children"
     ],
-    "url": [
-        "querystring",
-        "path"
+    "dom/base": [
+        "modulex-util",
+        "modulex-ua",
+        "modulex-feature",
+        "dom/selector"
     ],
-    "util": [
-        "logger-manager"
+    "dom/ie": [
+        "dom/base"
+    ],
+    "url": [
+        "modulex-querystring",
+        "modulex-path"
     ],
     "xtemplate": [
         "xtemplate/runtime"
@@ -3350,7 +3339,7 @@ S.config("requires",{
 });
 var win = window,
     isTouchGestureSupported = Feature.isTouchGestureSupported(),
-    add = S.add,
+    add = mx.add,
     emptyObject = {};
 
 function alias(name, aliasName) {
@@ -3361,21 +3350,10 @@ function alias(name, aliasName) {
    } else {
        cfg = name;
    }
-   S.config("alias", cfg);
+   mx.config("alias", cfg);
 }
 
 alias('anim', Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer');
-alias({
-    'dom/basic': [
-        'dom/base',
-        UA.ieMode < 9 ? 'dom/ie' : '',
-        Feature.isClassListSupported() ? '' : 'dom/class-list'
-    ],
-    dom: [
-        'dom/basic',
-        Feature.isQuerySelectorSupported() ? '' : 'dom/selector'
-    ]
-});
 alias('event/dom', [
     'event/dom/base',
     Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange',
@@ -3405,4 +3383,41 @@ if (!isTouchGestureSupported) {
 
 alias('ajax','io');
 alias('scroll-view', Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base');
+(function () {
+    function init(UA, Feature) {
+        modulex.config('alias', {
+            'modulex-dom': 'dom',
+            'dom/selector': Feature.isQuerySelectorSupported() ? '' : 'query-selector',
+            dom: [
+                'dom/base',
+                    UA.ieMode < 9 ? 'dom/ie' : ''
+            ]
+        });
+    }
+
+    if (typeof UA !== 'undefined') {
+        init(UA, Feature);
+    } else {
+        modulex.use(['modulex-ua', 'modulex-feature'], init);
+    }
+})();
+
+modulex.config('alias', {
+    'modulex-feature': 'feature'
+});
+modulex.config('alias', {
+    'modulex-path': 'path'
+});
+modulex.config('alias', {
+    'modulex-querystring': 'querystring'
+});
+modulex.config('alias', {
+    'modulex-ua': 'ua'
+});
+modulex.config('alias', {
+    'modulex-url': 'url'
+});
+modulex.config('alias', {
+    'modulex-util': 'util'
+});
 });

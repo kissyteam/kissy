@@ -1,1 +1,0 @@
-alert('innerHTML load external script');

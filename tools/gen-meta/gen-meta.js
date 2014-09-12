@@ -13,7 +13,7 @@ var suffix = program.suffix || '/meta';
 var output = program.output;
 var dir = program.dir || path.join(root, 'src/');
 var bowerDir = path.join(root, 'bower_components/');
-var HEAD = 'KISSY.use([\'ua\', \'feature\'], function(S, UA, Feature){';
+var HEAD = ['modulex.use([\'ua\', \'feature\'], function(UA, Feature){','var mx = modulex;'].join('\n');
 var FOOT = '});';
 var requireFiles = [];
 var jsFiles = [];
@@ -79,12 +79,12 @@ jsFiles.forEach(function (r) {
     }));
 });
 
-var code = ['S.config("requires",' + JSON.stringify(requires, undefined, 4) + ');'];
+var code = ['mx.config("requires",' + JSON.stringify(requires, undefined, 4) + ');'];
 
 if (jsCode.length > 1) {
     code = code.concat(['var win = window,',
         '    isTouchGestureSupported = Feature.isTouchGestureSupported(),',
-        '    add = S.add,',
+        '    add = mx.add,',
         '    emptyObject = {};',
         '']);
     code = code.concat(['function alias(name, aliasName) {',
@@ -95,7 +95,7 @@ if (jsCode.length > 1) {
         '   } else {' ,
         '       cfg = name;',
         '   }',
-        '   S.config("alias", cfg);' ,
+        '   mx.config("alias", cfg);' ,
         '}']);
     code = code.concat(jsCode);
 }

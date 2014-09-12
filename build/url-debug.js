@@ -2,14 +2,14 @@
 combined modules:
 url
 */
-modulex.add("url", ["querystring","path"], function(require, exports, module) {/**
+modulex.add("url", ["modulex-querystring","modulex-path"], function(require, exports, module) {/**
  * @ignore
  * url utilities
  * @author yiminghe@gmail.com
  */
-var querystring = require('querystring');
+var querystring = require('modulex-querystring');
 var undef;
-var Path = require('path');
+var Path = require('modulex-path');
 var reDisallowedInProtocolOrAuth = /[#\/\?@]/g,
     reDisallowedInPathName = /[#\?]/g,
     reDisallowedInHash = /#/g,

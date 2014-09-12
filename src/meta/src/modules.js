@@ -1,6 +1,7 @@
 /*jshint indent:false, quotmark:false*/
-KISSY.use(['ua', 'feature'], function(S, UA, Feature){
-S.config("requires",{
+modulex.use(['ua', 'feature'], function(UA, Feature){
+var mx = modulex;
+mx.config("requires",{
     "anim/base": [
         "dom",
         "querystring",
@@ -15,6 +16,7 @@ S.config("requires",{
         "feature"
     ],
     "attribute": [
+        "logger-manager",
         "event/custom"
     ],
     "base": [
@@ -63,6 +65,7 @@ S.config("requires",{
         "util"
     ],
     "date/format": [
+        "logger-manager",
         "date/gregorian"
     ],
     "date/gregorian": [
@@ -96,20 +99,6 @@ S.config("requires",{
     "dd/plugin/scroll": [
         "dd"
     ],
-    "dom/base": [
-        "util",
-        "feature"
-    ],
-    "dom/class-list": [
-        "dom/base"
-    ],
-    "dom/ie": [
-        "dom/base"
-    ],
-    "dom/selector": [
-        "util",
-        "dom/basic"
-    ],
     "editor": [
         "html-parser",
         "component/control"
@@ -127,6 +116,7 @@ S.config("requires",{
     "event/dom/base": [
         "event/base",
         "dom",
+        "logger-manager",
         "ua"
     ],
     "event/dom/focusin": [
@@ -169,25 +159,17 @@ S.config("requires",{
         "event/dom/base",
         "feature"
     ],
-    "feature": [
-        "ua"
-    ],
     "filter-menu": [
         "menu"
     ],
-    "html-parser": [
-        "util"
-    ],
     "io": [
         "dom",
+        "querystring",
         "event/custom",
         "promise",
         "url",
         "ua",
         "event/dom"
-    ],
-    "json": [
-        "util"
     ],
     "menu": [
         "component/container",
@@ -220,9 +202,7 @@ S.config("requires",{
         "component/extension/content-box"
     ],
     "promise": [
-        "util"
-    ],
-    "querystring": [
+        "util",
         "logger-manager"
     ],
     "resizable": [
@@ -233,6 +213,7 @@ S.config("requires",{
         "node"
     ],
     "router": [
+        "logger-manager",
         "url",
         "event/dom",
         "event/custom",
@@ -284,12 +265,18 @@ S.config("requires",{
         "component/extension/content-box",
         "component/extension/delegate-children"
     ],
-    "url": [
-        "querystring",
-        "path"
+    "dom/base": [
+        "modulex-util",
+        "modulex-ua",
+        "modulex-feature",
+        "dom/selector"
     ],
-    "util": [
-        "logger-manager"
+    "dom/ie": [
+        "dom/base"
+    ],
+    "url": [
+        "modulex-querystring",
+        "modulex-path"
     ],
     "xtemplate": [
         "xtemplate/runtime"
@@ -297,7 +284,7 @@ S.config("requires",{
 });
 var win = window,
     isTouchGestureSupported = Feature.isTouchGestureSupported(),
-    add = S.add,
+    add = mx.add,
     emptyObject = {};
 
 function alias(name, aliasName) {
@@ -308,21 +295,10 @@ function alias(name, aliasName) {
    } else {
        cfg = name;
    }
-   S.config("alias", cfg);
+   mx.config("alias", cfg);
 }
 
 alias('anim', Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer');
-alias({
-    'dom/basic': [
-        'dom/base',
-        UA.ieMode < 9 ? 'dom/ie' : '',
-        Feature.isClassListSupported() ? '' : 'dom/class-list'
-    ],
-    dom: [
-        'dom/basic',
-        Feature.isQuerySelectorSupported() ? '' : 'dom/selector'
-    ]
-});
 alias('event/dom', [
     'event/dom/base',
     Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange',
@@ -352,4 +328,41 @@ if (!isTouchGestureSupported) {
 
 alias('ajax','io');
 alias('scroll-view', Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base');
+(function () {
+    function init(UA, Feature) {
+        modulex.config('alias', {
+            'modulex-dom': 'dom',
+            'dom/selector': Feature.isQuerySelectorSupported() ? '' : 'query-selector',
+            dom: [
+                'dom/base',
+                    UA.ieMode < 9 ? 'dom/ie' : ''
+            ]
+        });
+    }
+
+    if (typeof UA !== 'undefined') {
+        init(UA, Feature);
+    } else {
+        modulex.use(['modulex-ua', 'modulex-feature'], init);
+    }
+})();
+
+modulex.config('alias', {
+    'modulex-feature': 'feature'
+});
+modulex.config('alias', {
+    'modulex-path': 'path'
+});
+modulex.config('alias', {
+    'modulex-querystring': 'querystring'
+});
+modulex.config('alias', {
+    'modulex-ua': 'ua'
+});
+modulex.config('alias', {
+    'modulex-url': 'url'
+});
+modulex.config('alias', {
+    'modulex-util': 'util'
+});
 });
