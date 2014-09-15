@@ -5,7 +5,7 @@
  */
 var util = require('util');
 var Dom = require('dom');
-var DomEvent = require('event/dom');
+var DomEvent = require('event-dom');
 /*global Node:true*/
 var Node = require('./base');
 var NLP = Node.prototype,

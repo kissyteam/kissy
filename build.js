@@ -20,16 +20,25 @@ function builds(cs) {
     });
 }
 
-//function builds2(cs) {
-//    cs.forEach(function (c) {
-//        build(c[0], c[1]);
-//    });
-//}
-
 build('xtemplate', ['xtemplate', 'xtemplate/runtime']);
 build('dom', ['dom/base', 'dom/ie']);
-builds(['util', 'querystring', 'path', 'ua', 'html-parser', 'json', 'url',
-    'query-selector',
-    'feature','logger-manager']);
+build('event-dom', [
+    'event-dom/base', 'event-dom/ie',
+    'event-dom/focusin', 'event-dom/hashchange',
+    'event-dom/input', 'event-dom/gesture/basic',
+    'event-dom/gesture/edge-pan',
+    'event-dom/gesture/pan',
+    'event-dom/gesture/pinch',
+    'event-dom/gesture/rotate',
+    'event-dom/gesture/shake',
+    'event-dom/gesture/swipe',
+    'event-dom/gesture/tap',
+    'event-dom/gesture/util'
+]);
+
+builds(['util', 'querystring', 'path',
+    'event-base', 'event-custom',
+    'ua', 'html-parser', 'json', 'url',
+    'query-selector', 'feature', 'logger-manager']);
 
 console.log('done');

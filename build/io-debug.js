@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Sep 4 18:16
+build time: Sep 15 12:41
 */
 /*
 combined modules:
@@ -276,7 +276,7 @@ KISSY.add('io/form-serializer', [
 KISSY.add('io/base', [
     'util',
     'querystring',
-    'event/custom',
+    'event-custom',
     'promise',
     'url'
 ], function (S, require, exports, module) {
@@ -288,7 +288,7 @@ KISSY.add('io/base', [
     var util = require('util');
     var querystring = require('querystring');    /*global CustomEvent:true*/
     /*global CustomEvent:true*/
-    var CustomEvent = require('event/custom');
+    var CustomEvent = require('event-custom');
     var Promise = require('promise');
     var url = require('url');
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/, rspace = /\s+/, mirror = function (s) {
@@ -1388,7 +1388,7 @@ KISSY.add('io/xdr-flash-transport', [
 });
 KISSY.add('io/sub-domain-transport', [
     'util',
-    'event/dom',
+    'event-dom',
     'url',
     'dom',
     './xhr-transport-base',
@@ -1400,7 +1400,7 @@ KISSY.add('io/sub-domain-transport', [
  * @author yiminghe@gmail.com
  */
     var util = require('util');
-    var DomEvent = require('event/dom'), url = require('url'), Dom = require('dom'), XhrTransportBase = require('./xhr-transport-base');
+    var DomEvent = require('event-dom'), url = require('url'), Dom = require('dom'), XhrTransportBase = require('./xhr-transport-base');
     var LoggerManager = require('logger-manager');
     var logger = LoggerManager.getLogger('s/io');
     var PROXY_PAGE = '/sub_domain_proxy.html', doc = document,
@@ -1697,7 +1697,7 @@ KISSY.add('io/iframe-transport', [
     'querystring',
     'dom',
     './base',
-    'event/dom',
+    'event-dom',
     'logger-manager',
     'ua'
 ], function (S, require, exports, module) {
@@ -1707,7 +1707,7 @@ KISSY.add('io/iframe-transport', [
  * @author yiminghe@gmail.com
  */
     var util = require('util'), querystring = require('querystring'), Dom = require('dom'), IO = require('./base');
-    var DomEvent = require('event/dom');
+    var DomEvent = require('event-dom');
     var LoggerManager = require('logger-manager');
     var logger = LoggerManager.getLogger('s/io');
     var UA = require('ua');

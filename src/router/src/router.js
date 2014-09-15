@@ -10,9 +10,9 @@ var utils = require('./router/utils');
 var Route = require('./router/route');
 var url = require('url');
 var Request = require('./router/request');
-var DomEvent = require('event/dom');
+var DomEvent = require('event-dom');
 /*global CustomEvent:true, history:true*/
-var CustomEvent = require('event/custom');
+var CustomEvent = require('event-custom');
 var getVidFromUrlWithHash = utils.getVidFromUrlWithHash;
 var win = window;
 var history = win.history;

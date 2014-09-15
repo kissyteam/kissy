@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 26 16:10
+build time: Sep 15 12:42
 */
 /*
 combined modules:
@@ -17,8 +17,8 @@ KISSY.add('router', [
     './router/route',
     'url',
     './router/request',
-    'event/dom',
-    'event/custom',
+    'event-dom',
+    'event-custom',
     'feature'
 ], function (S, require, exports, module) {
     /**
@@ -33,9 +33,9 @@ KISSY.add('router', [
     var Route = require('./router/route');
     var url = require('url');
     var Request = require('./router/request');
-    var DomEvent = require('event/dom');    /*global CustomEvent:true, history:true*/
+    var DomEvent = require('event-dom');    /*global CustomEvent:true, history:true*/
     /*global CustomEvent:true, history:true*/
-    var CustomEvent = require('event/custom');
+    var CustomEvent = require('event-custom');
     var getVidFromUrlWithHash = utils.getVidFromUrlWithHash;
     var win = window;
     var history = win.history;
@@ -485,13 +485,13 @@ KISSY.add('router', [
 });
 
 
-KISSY.add('router/utils', ['event/dom'], function (S, require, exports, module) {
+KISSY.add('router/utils', ['event-dom'], function (S, require, exports, module) {
     /**
  * utils for router
  * @author yiminghe@gmail.com
  */
     var utils;
-    var DomEvent = require('event/dom');
+    var DomEvent = require('event-dom');
     function removeVid(str) {
         return str.replace(/__ks-vid=.+$/, '');
     }

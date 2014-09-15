@@ -4,7 +4,7 @@
  */
 
 var utils;
-var DomEvent = require('event/dom');
+var DomEvent = require('event-dom');
 
 function removeVid(str) {
     return str.replace(/__ks-vid=.+$/, '');

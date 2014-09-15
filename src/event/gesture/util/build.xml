@@ -1,4 +1,0 @@
-<project name="event/gesture/util.build" default="build">
-    <property name="component.name" value="event/gesture/util"/>
-    <import file="../../../common.xml"/>
-</project>

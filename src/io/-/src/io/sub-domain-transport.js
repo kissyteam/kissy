@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 var util = require('util');
-var DomEvent = require('event/dom'),
+var DomEvent = require('event-dom'),
     url = require('url'),
     Dom = require('dom'),
     XhrTransportBase = require('./xhr-transport-base');

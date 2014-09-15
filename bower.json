@@ -24,6 +24,9 @@
         "html-parser": "modulex-html-parser#master",
         "ua": "modulex-ua#master",
         "dom": "modulex-dom#master",
+        "event-base": "modulex-event-base#master",
+        "event-dom": "modulex-event-dom#master",
+        "event-custom": "modulex-event-custom#master",
         "logger-manager": "logger-manager#master"
     },
     "ignore": [

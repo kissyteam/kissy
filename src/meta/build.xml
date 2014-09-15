@@ -8,6 +8,9 @@
 
     <target name="tpl2mod"/>
 
+    <target name="jscs"/>
+    <target name="jshint"/>
+
     <target name="merge-dependency">
         <exec executable="node" failonerror="true">
             <arg value="${tools.dir}/gen-meta/gen-meta"/>

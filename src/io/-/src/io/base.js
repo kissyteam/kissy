@@ -6,7 +6,7 @@
 var util = require('util');
 var querystring = require('querystring');
 /*global CustomEvent:true*/
-var CustomEvent = require('event/custom');
+var CustomEvent = require('event-custom');
 var Promise = require('promise');
 var url = require('url');
 var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,

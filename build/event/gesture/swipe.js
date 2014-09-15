@@ -1,9 +1,0 @@
-/*
-Copyright 2014, KISSY v5.0.0
-MIT Licensed
-build time: Aug 26 16:08
-*/
-KISSY.add("event/gesture/swipe",["util","dom","event/gesture/util","event/dom/base"],function(k,c,i,p){function l(a,h,b){var d=a.lastTouches[0],g=d.pageX-a.startX,m=d.pageY-a.startY,e=Math.abs(g),f=Math.abs(m),c=h.timeStamp;a.isStarted=1;if(c-a.startTime>q)return!1;a.isVertical&&e>n&&(a.isVertical=0);a.isHorizontal&&f>n&&(a.isHorizontal=0);a.isVertical&&a.isHorizontal&&(f>e?a.isHorizontal=0:a.isVertical=0);if(!b&&(a.isVertical&&f<o&&(a.isVertical=0),a.isHorizontal&&e<o))a.isHorizontal=0;if(a.isHorizontal)g=
-0>g?"left":"right";else if(a.isVertical)g=0>m?"up":"down",e=f;else return!1;b?(a=h.originalEvent._ksSwipePrevent)&&(!0===a||a[g])&&h.preventDefault():r.fire(d.target,j,{originalEvent:h.originalEvent,pageX:d.pageX,pageY:d.pageY,which:1,direction:g,distance:e,duration:(h.timeStamp-a.startTime)/1E3})}function b(){}var k=c("util"),s=c("dom"),i=c("event/gesture/util"),t=i.addEvent,r=c("event/dom/base"),j="swipe",q=1E3,n=35,o=50;k.extend(b,i.SingleTouch,{requiredGestureType:"touch",start:function(){b.superclass.start.apply(this,
-arguments);var a=this.lastTouches[0];this.isVertical=this.isHorizontal=1;this.startX=a.pageX;this.startY=a.pageY},move:function(a){b.superclass.move.apply(this,arguments);return l(this,a,1)},end:function(a){b.superclass.end.apply(this,arguments);return l(this,a,0)}});t([j],{handle:new b,add:function(a){var b=a.config,c=b.preventDefault;if(c){var d=b.filter;a._preventFn=function(a){var b;if(!(b=!d)){b=a.target;for(var e=a.currentTarget,f=!1;b!==e&&!(f=s.test(b,d));)b=b.parentNode;b=f}b&&(a._ksSwipePrevent=
-c)};this.addEventListener("touchmove",a._preventFn)}},remove:function(a){a._preventFn&&(this.removeEventListener("touchmove",a._preventFn),a._preventFn=null)}});p.exports={SWIPE:j}});

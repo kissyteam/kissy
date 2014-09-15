@@ -6,7 +6,7 @@
 var util = require('util');
 var LoggerManger = require('logger-manager');
 /* global CustomEvent: true */
-var CustomEvent = require('event/custom');
+var CustomEvent = require('event-custom');
 
 function bind(v) {
     if (v === util.noop) {

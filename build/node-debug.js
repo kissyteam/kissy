@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 26 16:09
+build time: Sep 15 12:41
 */
 /*
 combined modules:
@@ -30,7 +30,7 @@ KISSY.add('node', [
 KISSY.add('node/base', [
     'util',
     'dom',
-    'event/dom'
+    'event-dom'
 ], function (S, require, exports, module) {
     /**
  * @ignore
@@ -39,7 +39,7 @@ KISSY.add('node/base', [
  */
     var util = require('util');
     var Dom = require('dom');
-    var DomEvent = require('event/dom');
+    var DomEvent = require('event-dom');
     var AP = Array.prototype, slice = AP.slice, NodeType = Dom.NodeType, push = AP.push, makeArray = util.makeArray, isDomNodeList = Dom.isDomNodeList;    /**
  * The Node class provides a {@link KISSY.DOM} wrapper for manipulating Dom Node.
  * use KISSY.all/one to retrieve NodeList instances.
@@ -284,7 +284,7 @@ KISSY.add('node/base', [
 KISSY.add('node/attach', [
     'util',
     'dom',
-    'event/dom',
+    'event-dom',
     './base'
 ], function (S, require, exports, module) {
     /**
@@ -294,7 +294,7 @@ KISSY.add('node/attach', [
  */
     var util = require('util');
     var Dom = require('dom');
-    var DomEvent = require('event/dom');    /*global Node:true*/
+    var DomEvent = require('event-dom');    /*global Node:true*/
     /*global Node:true*/
     var Node = require('./base');
     var NLP = Node.prototype, makeArray = util.makeArray,

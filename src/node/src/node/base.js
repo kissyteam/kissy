@@ -6,7 +6,7 @@
 
 var util = require('util');
 var Dom = require('dom');
-var DomEvent = require('event/dom');
+var DomEvent = require('event-dom');
 var AP = Array.prototype,
     slice = AP.slice,
     NodeType = Dom.NodeType,

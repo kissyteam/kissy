@@ -16,8 +16,9 @@ mx.config("requires",{
         "feature"
     ],
     "attribute": [
+        "util",
         "logger-manager",
-        "event/custom"
+        "event-custom"
     ],
     "base": [
         "attribute"
@@ -43,6 +44,8 @@ mx.config("requires",{
         "event/gesture/basic",
         "event/gesture/tap",
         "base",
+        "ua",
+        "feature",
         "xtemplate/runtime"
     ],
     "component/extension/align": [
@@ -85,6 +88,7 @@ mx.config("requires",{
     ],
     "dd": [
         "base",
+        "ua",
         "node",
         "event/gesture/basic",
         "event/gesture/pan"
@@ -103,73 +107,17 @@ mx.config("requires",{
         "html-parser",
         "component/control"
     ],
-    "event": [
-        "event/dom",
-        "event/custom"
-    ],
-    "event/base": [
-        "util"
-    ],
-    "event/custom": [
-        "event/base"
-    ],
-    "event/dom/base": [
-        "event/base",
-        "dom",
-        "logger-manager",
-        "ua"
-    ],
-    "event/dom/focusin": [
-        "event/dom/base"
-    ],
-    "event/dom/hashchange": [
-        "event/dom/base"
-    ],
-    "event/dom/ie": [
-        "event/dom/base"
-    ],
-    "event/dom/input": [
-        "event/dom/base"
-    ],
-    "event/gesture/basic": [
-        "event/gesture/util"
-    ],
-    "event/gesture/edge-pan": [
-        "event/gesture/util"
-    ],
-    "event/gesture/pan": [
-        "event/gesture/util"
-    ],
-    "event/gesture/pinch": [
-        "event/gesture/util"
-    ],
-    "event/gesture/rotate": [
-        "event/gesture/util"
-    ],
-    "event/gesture/shake": [
-        "event/dom/base"
-    ],
-    "event/gesture/swipe": [
-        "event/gesture/util"
-    ],
-    "event/gesture/tap": [
-        "event/gesture/util"
-    ],
-    "event/gesture/util": [
-        "event/dom/base",
-        "feature"
-    ],
     "filter-menu": [
         "menu"
     ],
     "io": [
         "dom",
         "querystring",
-        "event/custom",
+        "event-custom",
         "promise",
         "url",
         "ua",
-        "event/dom"
+        "event-dom"
     ],
     "menu": [
         "component/container",
@@ -192,7 +140,7 @@ mx.config("requires",{
     "node": [
         "util",
         "dom",
-        "event/dom",
+        "event-dom",
         "anim"
     ],
     "overlay": [
@@ -213,10 +161,11 @@ mx.config("requires",{
         "node"
     ],
     "router": [
+        "util",
         "logger-manager",
         "url",
-        "event/dom",
-        "event/custom",
+        "event-dom",
+        "event-custom",
         "feature"
     ],
     "scroll-view/base": [
@@ -274,6 +223,58 @@ mx.config("requires",{
     "dom/ie": [
         "dom/base"
     ],
+    "event-base": [
+        "modulex-util"
+    ],
+    "event-custom": [
+        "modulex-util",
+        "modulex-event-base"
+    ],
+    "event-dom/base": [
+        "event-base",
+        "dom",
+        "ua"
+    ],
+    "event-dom/focusin": [
+        "event-dom/base"
+    ],
+    "event-dom/gesture/basic": [
+        "event-dom/gesture/util"
+    ],
+    "event-dom/gesture/edge-pan": [
+        "event-dom/gesture/util"
+    ],
+    "event-dom/gesture/pan": [
+        "event-dom/gesture/util"
+    ],
+    "event-dom/gesture/pinch": [
+        "event-dom/gesture/util"
+    ],
+    "event-dom/gesture/rotate": [
+        "event-dom/gesture/util"
+    ],
+    "event-dom/gesture/shake": [
+        "event-dom/base"
+    ],
+    "event-dom/gesture/swipe": [
+        "event-dom/gesture/util"
+    ],
+    "event-dom/gesture/tap": [
+        "event-dom/gesture/util"
+    ],
+    "event-dom/gesture/util": [
+        "event-dom/base",
+        "feature"
+    ],
+    "event-dom/hashchange": [
+        "event-dom/base"
+    ],
+    "event-dom/ie": [
+        "event-dom/base"
+    ],
+    "event-dom/input": [
+        "event-dom/base"
+    ],
     "url": [
         "modulex-querystring",
         "modulex-path"
@@ -299,33 +300,6 @@ function alias(name, aliasName) {
 }
 
 alias('anim', Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer');
-alias('event/dom', [
-    'event/dom/base',
-    Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange',
-        UA.ieMode < 9 ? 'event/dom/ie' : '',
-    Feature.isInputEventSupported() ? '' : 'event/dom/input',
-    UA.ie ? '' : 'event/dom/focusin'
-]);
-if (!isTouchGestureSupported) {
-    add('event/gesture/edge-pan', emptyObject);
-}
-
-if (!isTouchGestureSupported) {
-    add('event/gesture/pinch', emptyObject);
-}
-
-if (!isTouchGestureSupported) {
-    add('event/gesture/rotate', emptyObject);
-}
-
-if (!win.DeviceMotionEvent) {
-    add('event/gesture/shake', emptyObject);
-}
-
-if (!isTouchGestureSupported) {
-    add('event/gesture/swipe', emptyObject);
-}
-
 alias('ajax','io');
 alias('scroll-view', Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base');
 (function () {
@@ -344,6 +318,32 @@ alias('scroll-view', Feature.isTouchGestureSupported() ? 'scroll-view/touch' : '
         init(UA, Feature);
     } else {
         modulex.use(['modulex-ua', 'modulex-feature'], init);
+    }
+})();
+
+modulex.config('alias', {
+    'modulex-event-base': 'event-base'
+});
+modulex.config('alias', {
+    'modulex-event-custom': 'event-custom'
+});
+(function () {
+    function init(UA, Feature) {
+        modulex.config('alias', {
+            'event-dom': [
+                'event-dom/base',
+                Feature.isHashChangeSupported() ? '' : 'event-dom/hashchange',
+                    UA.ieMode < 9 ? 'event-dom/ie' : '',
+                Feature.isInputEventSupported() ? '' : 'event-dom/input',
+                UA.ie ? '' : 'event-dom/focusin'
+            ]
+        });
+    }
+
+    if (typeof UA !== 'undefined') {
+        init(UA, Feature);
+    } else {
+        modulex.use(['ua', 'feature'], init);
     }
 })();
 

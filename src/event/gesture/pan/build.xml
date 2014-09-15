@@ -1,4 +1,0 @@
-<project name="event/gesture/pan.build" default="build">
-    <property name="component.name" value="event/gesture/pan"/>
-    <import file="../../../common.xml"/>
-</project>

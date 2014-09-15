@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Aug 26 16:03
+build time: Sep 15 12:41
 */
 /*
 combined modules:
@@ -10,7 +10,7 @@ attribute
 KISSY.add('attribute', [
     'util',
     'logger-manager',
-    'event/custom'
+    'event-custom'
 ], function (S, require, exports, module) {
     /**!
  * @ignore
@@ -20,7 +20,7 @@ KISSY.add('attribute', [
     var util = require('util');
     var LoggerManger = require('logger-manager');    /* global CustomEvent: true */
     /* global CustomEvent: true */
-    var CustomEvent = require('event/custom');
+    var CustomEvent = require('event-custom');
     function bind(v) {
         if (v === util.noop) {
             return function () {
