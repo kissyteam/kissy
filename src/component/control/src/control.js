@@ -583,7 +583,9 @@ var Control = module.exports = Base.extend({
         $: function (selector) {
             return this.$el.all(selector);
         },
-
+        $one: function (selector) {
+            return this.$el.one(selector);
+        },
         fillChildrenElsBySelectors: function (childrenElSelectors) {
             var self = this,
                 el = self.$el,
@@ -595,7 +597,7 @@ var Control = module.exports = Base.extend({
                 selector = childrenElSelectors[childName];
                 var node = selector.call(self, el);
                 if (typeof node === 'string') {
-                    node = self.$(node);
+                    node = self.$one(node);
                 }
                 self.setInternal(childName, node);
             }

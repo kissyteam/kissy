@@ -55,7 +55,7 @@ if (UA.mobile || UA.phantomjs || location.protocol === 'file:') {
             it('can create into body', function () {
 
                 var swf1 = new SWF({
-                    src: '../assets/test.swf',
+                    src: '../t-assets/test.swf',
                     attrs: {
                         id: 'test',
                         width: 300,
@@ -85,7 +85,7 @@ if (UA.mobile || UA.phantomjs || location.protocol === 'file:') {
                 var render = Dom.create('<div class="test"></div>');
                 Dom.prepend(render, document.body);
                 var swf1 = new SWF({
-                    src: '../assets/test.swf',
+                    src: '../t-assets/test.swf',
                     render: render,
                     attrs: {
                         width: 300,
@@ -104,8 +104,8 @@ if (UA.mobile || UA.phantomjs || location.protocol === 'file:') {
                 expect(render.innerHTML.toLowerCase().indexOf('object')).toBeGreaterThan(0);
 
                 // has id
-                expect(swf1.get('html').replace('classid', '').indexOf('id=')).toBe(-1);
-                expect(Dom.hasAttr(swf1.get('el'), 'id')).toBeFalsy();
+                expect(swf1.get('html').replace('classid', '').indexOf('id=')).toBeGreaterThan(-1);
+                expect(Dom.hasAttr(swf1.get('el'), 'id')).toBe(true);
 
                 swf1.destroy();
                 waits(300);
@@ -116,7 +116,7 @@ if (UA.mobile || UA.phantomjs || location.protocol === 'file:') {
 
             it('ok with flashvars', function () {
                 var config = util.merge(util.clone(defaultConfig), {
-                    src: '../assets/flashvars.swf',
+                    src: '../t-assets/flashvars.swf',
                     params: {
                         bgcolor: '#038C3C',
                         flashvars: {
@@ -154,7 +154,7 @@ if (UA.mobile || UA.phantomjs || location.protocol === 'file:') {
 
             it('will handle low version', function () {
                 var swf1 = new SWF({
-                    src: '../assets/test.swf',
+                    src: '../t-assets/test.swf',
                     attrs: {
                         width: 300,
                         height: 300

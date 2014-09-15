@@ -7,7 +7,7 @@
 function shortcut(self) {
     var contentEl = self.get('contentEl');
     self.$contentEl = self.$contentEl = contentEl;
-    self.contentEl = self.contentEl = contentEl[0];
+    self.contentEl = self.contentEl = contentEl;
 }
 
 var contentTpl = require('./content-box/content-xtpl');
