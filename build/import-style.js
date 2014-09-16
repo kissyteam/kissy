@@ -1,6 +1,1 @@
-/*
-Copyright 2014, KISSY v5.0.0
-MIT Licensed
-build time: Aug 26 16:09
-*/
-(function(e){e.importStyle=function(b){"string"===typeof b&&(b=b.split(","));var g=e.Loader.Utils,h=e.Loader.Status,f=g.each,c=new e.Loader.ComboLoader,b=g.createModules(b),d=[];f(b,function(a){d.push.apply(d,a.getNormalizedModules())});var d=c.calculate(d,[]),i=[];f(d,function(a){"css"===a.getType()?(a.status=h.ATTACHED,i.push(a)):a.status=h.INIT});c=c.getComboUrls(i);c.css&&f(c.css,function(a){document.writeln(' <link rel="stylesheet" href="'+a.url+'">')})}})(KISSY);
+!function(e){function t(t,s){"string"==typeof t&&(t=t.split(","));var r=e.Loader.Utils,a=e.Loader.Status,u=r.each,n=e.Loader.ComboLoader,i=new n,l=r.createModules(t),c=[];u(l,function(e){c.push.apply(c,e.getNormalizedModules())}),c=i.calculate(c,[]);var d=[];u(c,function(e){"css"===e.getType()?(e.status=a.INITIALIZED,d.push(e)):e.status=a.UNLOADED});var p=i.getComboUris(d);return s?p:void(p.css&&u(p.css,function(e){document[o](' <link rel="stylesheet" href="'+e.uri+'">')}))}var o="writeln";e.importStyle=t}(modulex);
