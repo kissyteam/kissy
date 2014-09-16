@@ -28,6 +28,7 @@
         "modulex-event-dom": "*",
         "modulex-event-custom": "*",
         "modulex-color": "*",
+        "modulex-promise": "*",
         "modulex-anim": "*",
         "logger-manager": "*"
     },
