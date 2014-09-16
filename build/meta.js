@@ -134,6 +134,9 @@ modulex.config('alias', {
     'modulex-path': 'path'
 });
 modulex.config('alias', {
+    'modulex-promise': 'event-custom'
+});
+modulex.config('alias', {
     'modulex-querystring': 'querystring'
 });
 modulex.config('alias', {
