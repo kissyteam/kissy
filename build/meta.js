@@ -2,6 +2,10 @@
 modulex.use(['ua', 'feature'], function(UA, Feature){
 var mx = modulex;
 mx.config("requires",{
+    "attribute": [
+        "modulex-util",
+        "modulex-event-custom"
+    ],
     "dom/base": [
         "modulex-util",
         "modulex-ua",
@@ -13,6 +17,10 @@ mx.config("requires",{
     ],
     "event-base": [
         "modulex-util"
+    ],
+    "event-custom": [
+        "modulex-util",
+        "modulex-event-base"
     ],
     "anim/base": [
         "dom",
@@ -27,9 +35,8 @@ mx.config("requires",{
         "anim/base",
         "feature"
     ],
-    "event-custom": [
-        "modulex-util",
-        "modulex-event-base"
+    "base": [
+        "attribute"
     ],
     "event-dom/base": [
         "event-base",
@@ -85,6 +92,9 @@ mx.config("requires",{
     ]
 });
 modulex.config('alias', {
+    'modulex-attribute': 'attribute'
+});
+modulex.config('alias', {
     'modulex-dom': 'dom',
     'dom/selector': Feature.isQuerySelectorSupported() ? '' : 'query-selector',
     dom: [
@@ -96,10 +106,19 @@ modulex.config('alias', {
     'modulex-event-base': 'event-base'
 });
 modulex.config('alias', {
+    'modulex-event-custom': 'event-custom'
+});
+modulex.config('alias', {
     'modulex-feature': 'feature'
 });
 modulex.config('alias', {
     'anim': Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer'
+});
+modulex.config('alias', {
+    'modulex-attribute': 'attribute'
+});
+modulex.config('alias', {
+    'modulex-base': 'base'
 });
 modulex.config('alias', {
     'modulex-color': 'color'

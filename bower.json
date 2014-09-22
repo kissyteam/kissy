@@ -30,6 +30,8 @@
         "modulex-color": "*",
         "modulex-promise": "*",
         "modulex-anim": "*",
+        "modulex-attribute": "*",
+        "modulex-base": "*",
         "logger-manager": "*"
     },
     "ignore": [
