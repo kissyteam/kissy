@@ -1,7 +1,1 @@
-/*
-Copyright 2014, KISSY v5.0.0
-MIT Licensed
-build time: Aug 26 16:05
-*/
-KISSY.add("cookie",["util"],function(d,f,m,j){function g(b){return"string"===typeof b&&""!==b}var d=f("util"),h=document,k=encodeURIComponent,l=d.urlDecode;j.exports={get:function(b){var a,c;if(g(b)&&(c=(""+h.cookie).match(RegExp("(?:^| )"+b+"(?:(?:=([^;]*))|;|$)"))))a=c[1]?l(c[1]):"";return a},set:function(b,a,c,i,d,f){var a=""+k(a),e=c;"number"===typeof e&&(e=new Date,e.setTime(e.getTime()+864E5*c));e instanceof Date&&(a+="; expires="+e.toUTCString());g(i)&&(a+="; domain="+i);g(d)&&(a+="; path="+
-d);f&&(a+="; secure");h.cookie=b+"="+a},remove:function(b,a,c,d){this.set(b,"",-1,a,c,d)}}});
+modulex.add("cookie",[],function(e,n,t){var o;o=function(e){function n(e){return decodeURIComponent(e.replace(/\+/g," "))}function t(e){return"string"==typeof e&&""!==e}var o=document,r=864e5,i=encodeURIComponent;return e={get:function(e){var r,i;return t(e)&&(i=String(o.cookie).match(new RegExp("(?:^| )"+e+"(?:(?:=([^;]*))|;|$)")))&&(r=i[1]?n(i[1]):""),r},set:function(e,n,c,u,a,f){var m=String(i(n)),p=c;"number"==typeof p&&(p=new Date,p.setTime(p.getTime()+c*r)),p instanceof Date&&(m+="; expires="+p.toUTCString()),t(u)&&(m+="; domain="+u),t(a)&&(m+="; path="+a),f&&(m+="; secure"),o.cookie=e+"="+m},remove:function(e,n,t,o){this.set(e,"",-1,n,t,o)}}}(),t.exports=o});

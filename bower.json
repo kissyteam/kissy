@@ -32,6 +32,7 @@
         "modulex-anim": "*",
         "modulex-attribute": "*",
         "modulex-base": "*",
+        "modulex-cookie": "*",
         "logger-manager": "*"
     },
     "ignore": [
