@@ -33,6 +33,7 @@
         "modulex-attribute": "*",
         "modulex-base": "*",
         "modulex-cookie": "*",
+        "modulex-io": "*",
         "logger-manager": "*"
     },
     "ignore": [

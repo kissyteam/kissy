@@ -83,6 +83,16 @@ mx.config("requires",{
     "event-dom/input": [
         "event-dom/base"
     ],
+    "io": [
+        "util",
+        "dom",
+        "querystring",
+        "event-custom",
+        "promise",
+        "url",
+        "ua",
+        "event-dom"
+    ],
     "url": [
         "modulex-querystring",
         "modulex-path"
