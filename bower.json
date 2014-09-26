@@ -34,6 +34,7 @@
         "modulex-base": "*",
         "modulex-cookie": "*",
         "modulex-io": "*",
+        "modulex-router": "*",
         "logger-manager": "*"
     },
     "ignore": [

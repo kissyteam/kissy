@@ -1,6 +1,0 @@
-<project name="router.build" default="build" basedir=".">
-    <property name="component.name" value="router"/>
-    <property name="src.dir" location="./src/"/>
-
-    <import file="../common.xml"/>
-</project>

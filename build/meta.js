@@ -93,6 +93,12 @@ mx.config("requires",{
         "ua",
         "event-dom"
     ],
+    "router": [
+        "url",
+        "event-dom",
+        "event-custom",
+        "feature"
+    ],
     "url": [
         "modulex-querystring",
         "modulex-path"
