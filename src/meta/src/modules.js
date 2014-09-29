@@ -2,91 +2,19 @@
 modulex.use(['ua', 'feature'], function(UA, Feature){
 var mx = modulex;
 mx.config("requires",{
-    "anim/base": [
-        "dom",
-        "querystring",
-        "promise"
-    ],
-    "anim/timer": [
-        "anim/base",
-        "feature"
-    ],
-    "anim/transition": [
-        "anim/base",
-        "feature"
-    ],
-    "attribute": [
-        "util",
-        "logger-manager",
-        "event-custom"
-    ],
-    "base": [
-        "attribute"
-    ],
     "button": [
         "component/control"
     ],
-    "color": [
-        "attribute"
-    ],
     "combobox": [
+        "logger-manager",
         "menu",
         "io"
     ],
     "combobox/multi-word": [
         "combobox"
     ],
-    "component/container": [
-        "component/control"
-    ],
-    "component/control": [
-        "node",
-        "event/gesture/basic",
-        "event/gesture/tap",
-        "base",
-        "ua",
-        "feature",
-        "xtemplate/runtime"
-    ],
-    "component/extension/align": [
-        "node",
-        "ua"
-    ],
-    "component/extension/delegate-children": [
-        "component/control"
-    ],
-    "component/extension/shim": [
-        "ua"
-    ],
-    "component/plugin/drag": [
-        "dd"
-    ],
-    "component/plugin/resize": [
-        "resizable"
-    ],
-    "cookie": [
-        "util"
-    ],
-    "date/format": [
-        "logger-manager",
-        "date/gregorian"
-    ],
-    "date/gregorian": [
-        "util",
-        "i18n!date"
-    ],
-    "date/picker": [
-        "i18n!date/picker",
-        "component/control",
-        "date/format",
-        "date/picker-xtpl"
-    ],
-    "date/popup-picker": [
-        "date/picker",
-        "component/extension/shim",
-        "component/extension/align"
-    ],
     "dd": [
+        "logger-manager",
         "base",
         "ua",
         "node",
@@ -104,20 +32,12 @@ mx.config("requires",{
         "dd"
     ],
     "editor": [
+        "logger-manager",
         "html-parser",
         "component/control"
     ],
     "filter-menu": [
         "menu"
-    ],
-    "io": [
-        "dom",
-        "querystring",
-        "event-custom",
-        "promise",
-        "url",
-        "ua",
-        "event-dom"
     ],
     "menu": [
         "component/container",
@@ -137,21 +57,12 @@ mx.config("requires",{
     "navigation-view/bar": [
         "button"
     ],
-    "node": [
-        "util",
-        "dom",
-        "event-dom",
-        "anim"
-    ],
     "overlay": [
         "component/container",
         "component/extension/shim",
         "component/extension/align",
-        "component/extension/content-box"
-    ],
-    "promise": [
-        "util",
-        "logger-manager"
+        "component/extension/content-box",
+        "event/gesture/tap"
     ],
     "resizable": [
         "dd"
@@ -159,14 +70,6 @@ mx.config("requires",{
     "resizable/plugin/proxy": [
         "base",
         "node"
-    ],
-    "router": [
-        "util",
-        "logger-manager",
-        "url",
-        "event-dom",
-        "event-custom",
-        "feature"
     ],
     "scroll-view/base": [
         "anim/timer",
@@ -180,10 +83,12 @@ mx.config("requires",{
     ],
     "scroll-view/plugin/scrollbar": [
         "component/control",
+        "event/gesture/basic",
         "event/gesture/pan"
     ],
     "scroll-view/touch": [
         "scroll-view/base",
+        "event/gesture/basic",
         "event/gesture/pan"
     ],
     "separator": [
@@ -198,7 +103,8 @@ mx.config("requires",{
     "swf": [
         "dom",
         "json",
-        "attribute"
+        "attribute",
+        "util"
     ],
     "tabs": [
         "toolbar",
@@ -212,7 +118,12 @@ mx.config("requires",{
     "tree": [
         "component/container",
         "component/extension/content-box",
-        "component/extension/delegate-children"
+        "component/extension/delegate-children",
+        "event/gesture/tap"
+    ],
+    "attribute": [
+        "modulex-util",
+        "modulex-event-custom"
     ],
     "dom/base": [
         "modulex-util",
@@ -229,6 +140,62 @@ mx.config("requires",{
     "event-custom": [
         "modulex-util",
         "modulex-event-base"
+    ],
+    "gregorian-calendar": [
+        "i18n!gregorian-calendar"
+    ],
+    "anim/base": [
+        "dom",
+        "promise",
+        "util"
+    ],
+    "anim/timer": [
+        "anim/base",
+        "feature"
+    ],
+    "anim/transition": [
+        "anim/base",
+        "feature"
+    ],
+    "base": [
+        "attribute"
+    ],
+    "component/container": [
+        "component/control"
+    ],
+    "component/control": [
+        "node",
+        "event-dom/gesture/basic",
+        "event-dom/gesture/tap",
+        "base",
+        "xtemplate/runtime"
+    ],
+    "component/extension/align": [
+        "node",
+        "ua"
+    ],
+    "component/extension/content-box": [
+        "xtemplate/runtime"
+    ],
+    "component/extension/delegate-children": [
+        "component/control"
+    ],
+    "component/extension/shim": [
+        "ua"
+    ],
+    "component/plugin/drag": [
+        "dd"
+    ],
+    "component/plugin/resize": [
+        "resizable"
+    ],
+    "date-picker": [
+        "gregorian-calendar",
+        "component/control",
+        "gregorian-calendar-format",
+        "component/extension/shim",
+        "component/extension/align",
+        "i18n!date-picker"
     ],
     "event-dom/base": [
         "event-base",
@@ -275,12 +242,31 @@ mx.config("requires",{
     "event-dom/input": [
         "event-dom/base"
     ],
+    "io": [
+        "util",
+        "dom",
+        "querystring",
+        "event-custom",
+        "promise",
+        "url",
+        "ua",
+        "event-dom"
+    ],
+    "node": [
+        "util",
+        "dom",
+        "event-dom",
+        "anim"
+    ],
+    "router": [
+        "url",
+        "event-dom",
+        "event-custom",
+        "feature"
+    ],
     "url": [
         "modulex-querystring",
         "modulex-path"
-    ],
-    "xtemplate": [
-        "xtemplate/runtime"
     ]
 });
 var win = window,
@@ -299,59 +285,70 @@ function alias(name, aliasName) {
    mx.config("alias", cfg);
 }
 
-alias('anim', Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer');
-alias('ajax','io');
 alias('scroll-view', Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base');
-(function () {
-    function init(UA, Feature) {
-        modulex.config('alias', {
-            'modulex-dom': 'dom',
-            'dom/selector': Feature.isQuerySelectorSupported() ? '' : 'query-selector',
-            dom: [
-                'dom/base',
-                    UA.ieMode < 9 ? 'dom/ie' : ''
-            ]
-        });
-    }
-
-    if (typeof UA !== 'undefined') {
-        init(UA, Feature);
-    } else {
-        modulex.use(['modulex-ua', 'modulex-feature'], init);
-    }
-})();
-
+modulex.config('alias', {
+    'modulex-attribute': 'attribute'
+});
+modulex.config('alias', {
+    'modulex-dom': 'dom',
+    'dom/selector': Feature.isQuerySelectorSupported() ? '' : 'query-selector',
+    dom: [
+        'dom/base',
+            UA.ieMode < 9 ? 'dom/ie' : ''
+    ]
+});
 modulex.config('alias', {
     'modulex-event-base': 'event-base'
 });
 modulex.config('alias', {
     'modulex-event-custom': 'event-custom'
 });
-(function () {
-    function init(UA, Feature) {
-        modulex.config('alias', {
-            'event-dom': [
-                'event-dom/base',
-                Feature.isHashChangeSupported() ? '' : 'event-dom/hashchange',
-                    UA.ieMode < 9 ? 'event-dom/ie' : '',
-                Feature.isInputEventSupported() ? '' : 'event-dom/input',
-                UA.ie ? '' : 'event-dom/focusin'
-            ]
-        });
-    }
-
-    if (typeof UA !== 'undefined') {
-        init(UA, Feature);
-    } else {
-        modulex.use(['ua', 'feature'], init);
-    }
-})();
-
+modulex.config('alias', {
+    'modulex-feature': 'feature'
+});
+modulex.config('alias', {
+    'anim': Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer'
+});
+modulex.config('alias', {
+    'modulex-attribute': 'attribute'
+});
+modulex.config('alias', {
+    'modulex-base': 'base'
+});
+modulex.config('alias', {
+    'modulex-color': 'color'
+});
+modulex.config('alias', {
+    'modulex-dom': 'dom',
+    'dom/selector': Feature.isQuerySelectorSupported() ? '' : 'query-selector',
+    dom: [
+        'dom/base',
+            UA.ieMode < 9 ? 'dom/ie' : ''
+    ]
+});
+modulex.config('alias', {
+    'modulex-event-base': 'event-base'
+});
+modulex.config('alias', {
+    'modulex-event-custom': 'event-custom'
+});
+modulex.config('alias', {
+    'event-dom': [
+        'event-dom/base',
+        Feature.isHashChangeSupported() ? '' : 'event-dom/hashchange',
+            UA.ieMode < 9 ? 'event-dom/ie' : '',
+        Feature.isInputEventSupported() ? '' : 'event-dom/input',
+        UA.ie ? '' : 'event-dom/focusin'
+    ]
+});
 modulex.config('alias', {
     'modulex-feature': 'feature'
 });
 modulex.config('alias', {
     'modulex-path': 'path'
+});
+modulex.config('alias', {
+    'modulex-promise': 'event-custom'
 });
 modulex.config('alias', {
     'modulex-querystring': 'querystring'
@@ -361,6 +358,21 @@ modulex.config('alias', {
 });
 modulex.config('alias', {
     'modulex-url': 'url'
+});
+modulex.config('alias', {
+    'modulex-util': 'util'
+});
+modulex.config('alias', {
+    'modulex-path': 'path'
+});
+modulex.config('alias', {
+    'modulex-promise': 'event-custom'
+});
+modulex.config('alias', {
+    'modulex-querystring': 'querystring'
+});
+modulex.config('alias', {
+    'modulex-ua': 'ua'
 });
 modulex.config('alias', {
     'modulex-util': 'util'

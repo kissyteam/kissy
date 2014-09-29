@@ -23,7 +23,7 @@ utilBase = function (exports) {
    * @singleton
    */
   exports = {
-    version: '1.1.0',
+    version: '1.1.1',
     _debug: '@DEBUG@',
     mix: function (to, from) {
       for (var i in from) {
@@ -124,9 +124,6 @@ utilFunction = function (exports) {
       var m = fn, d = util.makeArray(data), f, r;
       if (typeof fn === 'string') {
         m = context[fn];
-      }
-      if (!m) {
-        util.error('method undefine');
       }
       f = function () {
         m.apply(context, d);
@@ -665,7 +662,7 @@ utilJson = function (exports) {
         }
       }
     }
-    return util.error('Invalid Json: ' + data);
+    throw new Error('Invalid Json: ' + data);
   };
   return exports;
 }();

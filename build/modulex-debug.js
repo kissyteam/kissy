@@ -26,11 +26,11 @@ var modulex = (function (undefined) {
     var mx = {
         /**
          * The build time of the library.
-         * NOTICE: 'Mon, 15 Sep 2014 12:07:10 GMT' will replace with current timestamp when compressing.
+         * NOTICE: 'Fri, 26 Sep 2014 13:14:48 GMT' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: 'Mon, 15 Sep 2014 12:07:10 GMT',
+        __BUILD_TIME: 'Fri, 26 Sep 2014 13:14:48 GMT',
 
         /**
          * modulex Environment.
@@ -58,10 +58,10 @@ var modulex = (function (undefined) {
 
         /**
          * The version of the library.
-         * NOTICE: '1.3.1' will replace with current version when compressing.
+         * NOTICE: '1.3.2' will replace with current version when compressing.
          * @type {String}
          */
-        version: '1.3.1',
+        version: '1.3.2',
 
         /**
          * set modulex configuration
@@ -277,6 +277,13 @@ var modulex = (function (undefined) {
 
     mix(Utils, {
         mix: mix,
+
+        getSuffix: function (str) {
+            var m = str.match(/\.(\w+)$/);
+            if (m) {
+                return m[1];
+            }
+        },
 
         noop: function () {
         },
@@ -603,8 +610,16 @@ var modulex = (function (undefined) {
             }
         };
 
-        require.toUrl = function (relativeId) {
-            return self.resolve(relativeId).getUri();
+        require.toUrl = function (relativeUrl) {
+            var url = self.getUri();
+            var prefix = '';
+            var suffix = url;
+            var index = url.indexOf('//');
+            if (index !== -1) {
+                prefix = url.slice(0, index + 2);
+                suffix = url.slice(index + 2);
+            }
+            return prefix + Utils.normalizePath(suffix, relativeUrl);
         };
 
         require.load = mx.getScript;
@@ -663,10 +678,14 @@ var modulex = (function (undefined) {
             var self = this;
             var v = self.type;
             if (!v) {
-                if (Utils.endsWith(self.id, '.css')) {
+                var id = self.id;
+                if (Utils.endsWith(id, '.css')) {
                     v = 'css';
-                } else {
+
+                } else if (Utils.endsWith(id, '.js')) {
                     v = 'js';
+                } else {
+                    v = Utils.getSuffix(id) || 'js';
                 }
                 self.type = v;
             }
@@ -1268,8 +1287,9 @@ var modulex = (function (undefined) {
         var extname = mod.getType();
         var suffix = '.' + extname;
         if (!subPath) {
-            // special for css module
-            id = id.replace(/\.css$/, '');
+            if (Utils.endsWith(id, suffix)) {
+                id = id.slice(0, -suffix.length);
+            }
             filter = packageInfo.getFilter() || '';
 
             if (typeof filter === 'function') {
@@ -1489,13 +1509,27 @@ var modulex = (function (undefined) {
         return config;
     }
 
+    function adaptRequirejs(requires) {
+        var ret = [];
+        var i, r, len;
+        for (i = 0, len = requires.length; i < len; i++) {
+            r = requires[i];
+            if (r === 'exports' || r === 'module' || r === 'require') {
+
+            } else {
+                ret.push(r);
+            }
+        }
+        return ret;
+    }
+
     ComboLoader.add = function (id, factory, config, argsLen) {
         // modulex.add('xx',[],function(){});
         if (argsLen === 3 && Utils.isArray(factory)) {
             var tmp = factory;
             factory = config;
             config = {
-                requires: tmp,
+                requires: adaptRequirejs(tmp),
                 cjs: 1
             };
         }

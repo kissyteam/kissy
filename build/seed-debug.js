@@ -26,11 +26,11 @@ var modulex = (function (undefined) {
     var mx = {
         /**
          * The build time of the library.
-         * NOTICE: 'Thu, 11 Sep 2014 07:33:56 GMT' will replace with current timestamp when compressing.
+         * NOTICE: 'Fri, 26 Sep 2014 13:14:48 GMT' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: 'Thu, 11 Sep 2014 07:33:56 GMT',
+        __BUILD_TIME: 'Fri, 26 Sep 2014 13:14:48 GMT',
 
         /**
          * modulex Environment.
@@ -58,10 +58,10 @@ var modulex = (function (undefined) {
 
         /**
          * The version of the library.
-         * NOTICE: '1.3.1' will replace with current version when compressing.
+         * NOTICE: '1.3.2' will replace with current version when compressing.
          * @type {String}
          */
-        version: '1.3.1',
+        version: '1.3.2',
 
         /**
          * set modulex configuration
@@ -278,6 +278,13 @@ var modulex = (function (undefined) {
     mix(Utils, {
         mix: mix,
 
+        getSuffix: function (str) {
+            var m = str.match(/\.(\w+)$/);
+            if (m) {
+                return m[1];
+            }
+        },
+
         noop: function () {
         },
 
@@ -471,14 +478,6 @@ var modulex = (function (undefined) {
     var createModule = Utils.createModule;
     var mix = Utils.mix;
 
-    function makeArray(arr) {
-        var ret = [];
-        for (var i = 0; i < arr.length; i++) {
-            ret[i] = arr[i];
-        }
-        return ret;
-    }
-
     function checkGlobalIfNotExist(self, property) {
         return property in self ? self[property] : Config[property];
     }
@@ -545,6 +544,13 @@ var modulex = (function (undefined) {
 
     Loader.Package = Package;
 
+    function async(self, mods, callback) {
+        for (var i = 0; i < mods.length; i++) {
+            mods[i] = self.resolve(mods[i]).id;
+        }
+        mx.use(mods, callback);
+    }
+
     /**
      * @class modulex.Loader.Module
      */
@@ -594,27 +600,26 @@ var modulex = (function (undefined) {
 
         self.waits = {};
 
-        var require = self._require = function (id) {
+        var require = self._require = function (id, callback) {
             if (typeof id === 'string') {
                 var requiresModule = self.resolve(id);
                 Utils.initModules(requiresModule.getNormalizedModules());
                 return requiresModule.getExports();
             } else {
-                require.async.apply(require, arguments);
+                async(self, id, callback);
             }
         };
 
-        require.async = function (mods) {
-            for (var i = 0; i < mods.length; i++) {
-                mods[i] = self.resolve(mods[i]).id;
+        require.toUrl = function (relativeUrl) {
+            var url = self.getUri();
+            var prefix = '';
+            var suffix = url;
+            var index = url.indexOf('//');
+            if (index !== -1) {
+                prefix = url.slice(0, index + 2);
+                suffix = url.slice(index + 2);
             }
-            var args = makeArray(arguments);
-            args[0] = mods;
-            mx.use.apply(mx, args);
-        };
-
-        require.toUrl = function (relativeId) {
-            return self.resolve(relativeId).getUri();
+            return prefix + Utils.normalizePath(suffix, relativeUrl);
         };
 
         require.load = mx.getScript;
@@ -673,10 +678,14 @@ var modulex = (function (undefined) {
             var self = this;
             var v = self.type;
             if (!v) {
-                if (Utils.endsWith(self.id, '.css')) {
+                var id = self.id;
+                if (Utils.endsWith(id, '.css')) {
                     v = 'css';
-                } else {
+
+                } else if (Utils.endsWith(id, '.js')) {
                     v = 'js';
+                } else {
+                    v = Utils.getSuffix(id) || 'js';
                 }
                 self.type = v;
             }
@@ -851,6 +860,7 @@ var modulex = (function (undefined) {
                                 exception: e,
                                 module: self
                             };
+                            self.error = error;
                             if (self.onError) {
                                 self.onError(error);
                             }
@@ -920,8 +930,9 @@ var modulex = (function (undefined) {
 
         undef: function () {
             this.status = Status.UNLOADED;
-            delete this.factory;
-            delete this.exports;
+            this.error = null;
+            this.factory = null;
+            this.exports = null;
         }
     };
 
@@ -1276,8 +1287,9 @@ var modulex = (function (undefined) {
         var extname = mod.getType();
         var suffix = '.' + extname;
         if (!subPath) {
-            // special for css module
-            id = id.replace(/\.css$/, '');
+            if (Utils.endsWith(id, suffix)) {
+                id = id.slice(0, -suffix.length);
+            }
             filter = packageInfo.getFilter() || '';
 
             if (typeof filter === 'function') {
@@ -1497,13 +1509,27 @@ var modulex = (function (undefined) {
         return config;
     }
 
+    function adaptRequirejs(requires) {
+        var ret = [];
+        var i, r, len;
+        for (i = 0, len = requires.length; i < len; i++) {
+            r = requires[i];
+            if (r === 'exports' || r === 'module' || r === 'require') {
+
+            } else {
+                ret.push(r);
+            }
+        }
+        return ret;
+    }
+
     ComboLoader.add = function (id, factory, config, argsLen) {
         // modulex.add('xx',[],function(){});
         if (argsLen === 3 && Utils.isArray(factory)) {
             var tmp = factory;
             factory = config;
             config = {
-                requires: tmp,
+                requires: adaptRequirejs(tmp),
                 cjs: 1
             };
         }
@@ -1649,6 +1675,7 @@ var modulex = (function (undefined) {
                                 exception: msg,
                                 module: mod
                             };
+                            mod.error = error;
                             if (mod.onError) {
                                 mod.onError(error);
                             }
@@ -1679,6 +1706,18 @@ var modulex = (function (undefined) {
                                     one.uri;
                                 console.error(msg);
                                 mod.status = ERROR;
+                                var error = {
+                                    type: 'load',
+                                    exception: msg,
+                                    module: mod
+                                };
+                                mod.error = error;
+                                if (mod.onError) {
+                                    mod.onError(error);
+                                }
+                                if (Config.onModuleError) {
+                                    Config.onModuleError(error);
+                                }
                             }
                             // notify all loader instance
                             mod.flush();
@@ -2126,6 +2165,7 @@ var modulex = (function (undefined) {
             function loadReady() {
                 ++tryCount;
                 var errorList = [];
+                // get error from last round of load
                 unloadedMods = loader.calculate(unloadedMods, errorList);
                 allUnLoadedMods = allUnLoadedMods.concat(unloadedMods);
                 var unloadModsLen = unloadedMods.length;
@@ -2140,7 +2180,7 @@ var modulex = (function (undefined) {
                                 errorList.push(m);
                             }
                         });
-                        processError(errorList, 'initialize');
+                        processError(errorList, 'init');
                     } else if (success) {
                         if ('@DEBUG@') {
                             success.apply(mx, Utils.getModulesExports(mods));
@@ -3033,7 +3073,7 @@ module.exports = {
 };});/*
 Copyright 2014, KISSY v5.0.0
 MIT Licensed
-build time: Sep 15 12:43
+build time: Sep 29 20:14
 */
 /**
  * @ignore
@@ -3057,91 +3097,19 @@ KISSY.config({
 modulex.use(['ua', 'feature'], function(UA, Feature){
 var mx = modulex;
 mx.config("requires",{
-    "anim/base": [
-        "dom",
-        "querystring",
-        "promise"
-    ],
-    "anim/timer": [
-        "anim/base",
-        "feature"
-    ],
-    "anim/transition": [
-        "anim/base",
-        "feature"
-    ],
-    "attribute": [
-        "util",
-        "logger-manager",
-        "event-custom"
-    ],
-    "base": [
-        "attribute"
-    ],
     "button": [
         "component/control"
     ],
-    "color": [
-        "attribute"
-    ],
     "combobox": [
+        "logger-manager",
         "menu",
         "io"
     ],
     "combobox/multi-word": [
         "combobox"
     ],
-    "component/container": [
-        "component/control"
-    ],
-    "component/control": [
-        "node",
-        "event/gesture/basic",
-        "event/gesture/tap",
-        "base",
-        "ua",
-        "feature",
-        "xtemplate/runtime"
-    ],
-    "component/extension/align": [
-        "node",
-        "ua"
-    ],
-    "component/extension/delegate-children": [
-        "component/control"
-    ],
-    "component/extension/shim": [
-        "ua"
-    ],
-    "component/plugin/drag": [
-        "dd"
-    ],
-    "component/plugin/resize": [
-        "resizable"
-    ],
-    "cookie": [
-        "util"
-    ],
-    "date/format": [
-        "logger-manager",
-        "date/gregorian"
-    ],
-    "date/gregorian": [
-        "util",
-        "i18n!date"
-    ],
-    "date/picker": [
-        "i18n!date/picker",
-        "component/control",
-        "date/format",
-        "date/picker-xtpl"
-    ],
-    "date/popup-picker": [
-        "date/picker",
-        "component/extension/shim",
-        "component/extension/align"
-    ],
     "dd": [
+        "logger-manager",
         "base",
         "ua",
         "node",
@@ -3159,20 +3127,12 @@ mx.config("requires",{
         "dd"
     ],
     "editor": [
+        "logger-manager",
         "html-parser",
         "component/control"
     ],
     "filter-menu": [
         "menu"
-    ],
-    "io": [
-        "dom",
-        "querystring",
-        "event-custom",
-        "promise",
-        "url",
-        "ua",
-        "event-dom"
     ],
     "menu": [
         "component/container",
@@ -3192,21 +3152,12 @@ mx.config("requires",{
     "navigation-view/bar": [
         "button"
     ],
-    "node": [
-        "util",
-        "dom",
-        "event-dom",
-        "anim"
-    ],
     "overlay": [
         "component/container",
         "component/extension/shim",
         "component/extension/align",
-        "component/extension/content-box"
-    ],
-    "promise": [
-        "util",
-        "logger-manager"
+        "component/extension/content-box",
+        "event/gesture/tap"
     ],
     "resizable": [
         "dd"
@@ -3214,14 +3165,6 @@ mx.config("requires",{
     "resizable/plugin/proxy": [
         "base",
         "node"
-    ],
-    "router": [
-        "util",
-        "logger-manager",
-        "url",
-        "event-dom",
-        "event-custom",
-        "feature"
     ],
     "scroll-view/base": [
         "anim/timer",
@@ -3235,10 +3178,12 @@ mx.config("requires",{
     ],
     "scroll-view/plugin/scrollbar": [
         "component/control",
+        "event/gesture/basic",
         "event/gesture/pan"
     ],
     "scroll-view/touch": [
         "scroll-view/base",
+        "event/gesture/basic",
         "event/gesture/pan"
     ],
     "separator": [
@@ -3253,7 +3198,8 @@ mx.config("requires",{
     "swf": [
         "dom",
         "json",
-        "attribute"
+        "attribute",
+        "util"
     ],
     "tabs": [
         "toolbar",
@@ -3267,7 +3213,12 @@ mx.config("requires",{
     "tree": [
         "component/container",
         "component/extension/content-box",
-        "component/extension/delegate-children"
+        "component/extension/delegate-children",
+        "event/gesture/tap"
+    ],
+    "attribute": [
+        "modulex-util",
+        "modulex-event-custom"
     ],
     "dom/base": [
         "modulex-util",
@@ -3284,6 +3235,62 @@ mx.config("requires",{
     "event-custom": [
         "modulex-util",
         "modulex-event-base"
+    ],
+    "gregorian-calendar": [
+        "i18n!gregorian-calendar"
+    ],
+    "anim/base": [
+        "dom",
+        "promise",
+        "util"
+    ],
+    "anim/timer": [
+        "anim/base",
+        "feature"
+    ],
+    "anim/transition": [
+        "anim/base",
+        "feature"
+    ],
+    "base": [
+        "attribute"
+    ],
+    "component/container": [
+        "component/control"
+    ],
+    "component/control": [
+        "node",
+        "event-dom/gesture/basic",
+        "event-dom/gesture/tap",
+        "base",
+        "xtemplate/runtime"
+    ],
+    "component/extension/align": [
+        "node",
+        "ua"
+    ],
+    "component/extension/content-box": [
+        "xtemplate/runtime"
+    ],
+    "component/extension/delegate-children": [
+        "component/control"
+    ],
+    "component/extension/shim": [
+        "ua"
+    ],
+    "component/plugin/drag": [
+        "dd"
+    ],
+    "component/plugin/resize": [
+        "resizable"
+    ],
+    "date-picker": [
+        "gregorian-calendar",
+        "component/control",
+        "gregorian-calendar-format",
+        "component/extension/shim",
+        "component/extension/align",
+        "i18n!date-picker"
     ],
     "event-dom/base": [
         "event-base",
@@ -3330,12 +3337,31 @@ mx.config("requires",{
     "event-dom/input": [
         "event-dom/base"
     ],
+    "io": [
+        "util",
+        "dom",
+        "querystring",
+        "event-custom",
+        "promise",
+        "url",
+        "ua",
+        "event-dom"
+    ],
+    "node": [
+        "util",
+        "dom",
+        "event-dom",
+        "anim"
+    ],
+    "router": [
+        "url",
+        "event-dom",
+        "event-custom",
+        "feature"
+    ],
     "url": [
         "modulex-querystring",
         "modulex-path"
-    ],
-    "xtemplate": [
-        "xtemplate/runtime"
     ]
 });
 var win = window,
@@ -3354,59 +3380,70 @@ function alias(name, aliasName) {
    mx.config("alias", cfg);
 }
 
-alias('anim', Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer');
-alias('ajax','io');
 alias('scroll-view', Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base');
-(function () {
-    function init(UA, Feature) {
-        modulex.config('alias', {
-            'modulex-dom': 'dom',
-            'dom/selector': Feature.isQuerySelectorSupported() ? '' : 'query-selector',
-            dom: [
-                'dom/base',
-                    UA.ieMode < 9 ? 'dom/ie' : ''
-            ]
-        });
-    }
-
-    if (typeof UA !== 'undefined') {
-        init(UA, Feature);
-    } else {
-        modulex.use(['modulex-ua', 'modulex-feature'], init);
-    }
-})();
-
+modulex.config('alias', {
+    'modulex-attribute': 'attribute'
+});
+modulex.config('alias', {
+    'modulex-dom': 'dom',
+    'dom/selector': Feature.isQuerySelectorSupported() ? '' : 'query-selector',
+    dom: [
+        'dom/base',
+            UA.ieMode < 9 ? 'dom/ie' : ''
+    ]
+});
 modulex.config('alias', {
     'modulex-event-base': 'event-base'
 });
 modulex.config('alias', {
     'modulex-event-custom': 'event-custom'
 });
-(function () {
-    function init(UA, Feature) {
-        modulex.config('alias', {
-            'event-dom': [
-                'event-dom/base',
-                Feature.isHashChangeSupported() ? '' : 'event-dom/hashchange',
-                    UA.ieMode < 9 ? 'event-dom/ie' : '',
-                Feature.isInputEventSupported() ? '' : 'event-dom/input',
-                UA.ie ? '' : 'event-dom/focusin'
-            ]
-        });
-    }
-
-    if (typeof UA !== 'undefined') {
-        init(UA, Feature);
-    } else {
-        modulex.use(['ua', 'feature'], init);
-    }
-})();
-
+modulex.config('alias', {
+    'modulex-feature': 'feature'
+});
+modulex.config('alias', {
+    'anim': Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer'
+});
+modulex.config('alias', {
+    'modulex-attribute': 'attribute'
+});
+modulex.config('alias', {
+    'modulex-base': 'base'
+});
+modulex.config('alias', {
+    'modulex-color': 'color'
+});
+modulex.config('alias', {
+    'modulex-dom': 'dom',
+    'dom/selector': Feature.isQuerySelectorSupported() ? '' : 'query-selector',
+    dom: [
+        'dom/base',
+            UA.ieMode < 9 ? 'dom/ie' : ''
+    ]
+});
+modulex.config('alias', {
+    'modulex-event-base': 'event-base'
+});
+modulex.config('alias', {
+    'modulex-event-custom': 'event-custom'
+});
+modulex.config('alias', {
+    'event-dom': [
+        'event-dom/base',
+        Feature.isHashChangeSupported() ? '' : 'event-dom/hashchange',
+            UA.ieMode < 9 ? 'event-dom/ie' : '',
+        Feature.isInputEventSupported() ? '' : 'event-dom/input',
+        UA.ie ? '' : 'event-dom/focusin'
+    ]
+});
 modulex.config('alias', {
     'modulex-feature': 'feature'
 });
 modulex.config('alias', {
     'modulex-path': 'path'
+});
+modulex.config('alias', {
+    'modulex-promise': 'event-custom'
 });
 modulex.config('alias', {
     'modulex-querystring': 'querystring'
@@ -3416,6 +3453,21 @@ modulex.config('alias', {
 });
 modulex.config('alias', {
     'modulex-url': 'url'
+});
+modulex.config('alias', {
+    'modulex-util': 'util'
+});
+modulex.config('alias', {
+    'modulex-path': 'path'
+});
+modulex.config('alias', {
+    'modulex-promise': 'event-custom'
+});
+modulex.config('alias', {
+    'modulex-querystring': 'querystring'
+});
+modulex.config('alias', {
+    'modulex-ua': 'ua'
 });
 modulex.config('alias', {
     'modulex-util': 'util'

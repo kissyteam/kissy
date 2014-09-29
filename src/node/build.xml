@@ -1,5 +1,0 @@
-<project name="node.build" default="build" basedir=".">
-    <property name="component.name" value="node"/>
-
-    <import file="../common.xml"/>
-</project>

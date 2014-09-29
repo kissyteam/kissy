@@ -1,112 +1,118 @@
-/*
-Copyright 2014, KISSY v5.0.0
-MIT Licensed
-build time: Aug 26 16:04
-*/
+modulex.add("component/extension/content-box", ["xtemplate/runtime"], function(require, exports, module) {
+var xtemplateRuntime = require("xtemplate/runtime");
 /*
 combined modules:
 component/extension/content-box
-component/extension/content-box/content-xtpl
+component/extension/content-box/xtpl/view-render
+component/extension/content-box/xtpl/view
 */
-KISSY.add('component/extension/content-box', ['./content-box/content-xtpl'], function (S, require, exports, module) {
-    /**
- * @ignore
- * common content box render
- * @author yiminghe@gmail.com
- */
-    function shortcut(self) {
-        var contentEl = self.get('contentEl');
-        self.$contentEl = self.$contentEl = contentEl;
-        self.contentEl = self.contentEl = contentEl[0];
+var componentExtensionContentBoxXtplView, componentExtensionContentBoxXtplViewRender, componentExtensionContentBox;
+componentExtensionContentBoxXtplView = function (exports) {
+  exports = function view(undefined) {
+    var t;
+    var t0;
+    var t1;
+    var t2;
+    var t3;
+    var t4;
+    var t5;
+    var t6;
+    var t7;
+    var t8;
+    var t9;
+    var tpl = this;
+    var root = tpl.root;
+    var buffer = tpl.buffer;
+    var scope = tpl.scope;
+    var name = tpl.name;
+    var pos = tpl.pos;
+    var data = scope.data;
+    var affix = scope.affix;
+    var nativeCommands = root.nativeCommands;
+    var utils = root.utils;
+    var callFnUtil = utils['callFn'];
+    var callCommandUtil = utils['callCommand'];
+    var rangeCommand = nativeCommands['range'];
+    var foreachCommand = nativeCommands['foreach'];
+    var forinCommand = nativeCommands['forin'];
+    var eachCommand = nativeCommands['each'];
+    var withCommand = nativeCommands['with'];
+    var ifCommand = nativeCommands['if'];
+    var setCommand = nativeCommands['set'];
+    var includeCommand = nativeCommands['include'];
+    var parseCommand = nativeCommands['parse'];
+    var extendCommand = nativeCommands['extend'];
+    var blockCommand = nativeCommands['block'];
+    var macroCommand = nativeCommands['macro'];
+    var debuggerCommand = nativeCommands['debugger'];
+    buffer.data += '<div class="';
+    pos.line = 1;
+    var callRet0;
+    callRet0 = callFnUtil(tpl, scope, {
+      escape: 1,
+      params: ['content']
+    }, buffer, ['getBaseCssClasses']);
+    buffer = buffer.writeEscaped(callRet0);
+    buffer.data += '">';
+    var id1 = (t = affix.content) !== undefined ? t : (t = data.content) !== undefined ? t : scope.resolveLooseUp(['content']);
+    buffer = buffer.write(id1);
+    buffer.data += '</div>';
+    return buffer;
+  };
+  module.exports.TPL_NAME = module.id || module.name;
+  return exports;
+}();
+componentExtensionContentBoxXtplViewRender = function (exports) {
+  var tpl = componentExtensionContentBoxXtplView;
+  var XTemplateRuntime = xtemplateRuntime;
+  var instance = new XTemplateRuntime(tpl);
+  exports = function () {
+    return instance.render.apply(instance, arguments);
+  };
+  return exports;
+}();
+componentExtensionContentBox = function (exports) {
+  function shortcut(self) {
+    var contentEl = self.get('contentEl');
+    self.$contentEl = self.$contentEl = contentEl;
+    self.contentEl = self.contentEl = contentEl;
+  }
+  var contentTpl = componentExtensionContentBoxXtplViewRender;
+  function ContentBox() {
+  }
+  ContentBox.prototype = {
+    __createDom: function () {
+      shortcut(this);
+    },
+    __decorateDom: function () {
+      shortcut(this);
+    },
+    getChildrenContainerEl: function () {
+      return this.get('contentEl');
+    },
+    _onSetContent: function (v) {
+      var contentEl = this.$contentEl;
+      contentEl.html(v);
+      if (!this.get('allowTextSelection')) {
+        contentEl.unselectable();
+      }
     }
-    var contentTpl = require('./content-box/content-xtpl');    /**
- * content-render extension for component system
- * @class KISSY.Component.Extension.ContentBox
- */
-    /**
- * content-render extension for component system
- * @class KISSY.Component.Extension.ContentBox
- */
-    function ContentBox() {
+  };
+  ContentBox.ATTRS = {
+    contentTpl: { value: contentTpl },
+    contentEl: {
+      selector: function () {
+        return '.' + this.getBaseCssClass('content');
+      }
+    },
+    content: {
+      parse: function () {
+        return this.get('contentEl').html();
+      }
     }
-    ContentBox.prototype = {
-        __createDom: function () {
-            shortcut(this);
-        },
-        __decorateDom: function () {
-            shortcut(this);
-        },
-        getChildrenContainerEl: function () {
-            // can not use $contentEl, maybe called by decorateDom method
-            return this.get('contentEl');
-        },
-        _onSetContent: function (v) {
-            var contentEl = this.$contentEl;
-            contentEl.html(v);    // ie needs to set unselectable attribute recursively
-            // ie needs to set unselectable attribute recursively
-            if (!this.get('allowTextSelection')) {
-                contentEl.unselectable();
-            }
-        }
-    };
-    ContentBox.ATTRS = {
-        contentTpl: { value: contentTpl },
-        contentEl: {
-            selector: function () {
-                return '.' + this.getBaseCssClass('content');
-            }
-        },
-        content: {
-            parse: function () {
-                return this.get('contentEl').html();
-            }
-        }
-    };
-    module.exports = ContentBox;
-});
-KISSY.add('component/extension/content-box/content-xtpl', [], function (S, require, exports, module) {
-    /* Compiled By XTemplate */
-    /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true, sub:true*/
-    module.exports = function contentXtpl(scope, buffer, undefined) {
-        var tpl = this;
-        var pos = tpl.pos = {
-                line: 1,
-                col: 1
-            };
-        var nativeCommands = tpl.root.nativeCommands;
-        var utils = tpl.root.utils;
-        var callFnUtil = utils['callFn'];
-        var callCommandUtil = utils['callCommand'];
-        var rangeCommand = nativeCommands['range'];
-        var eachCommand = nativeCommands['each'];
-        var withCommand = nativeCommands['with'];
-        var ifCommand = nativeCommands['if'];
-        var setCommand = nativeCommands['set'];
-        var includeCommand = nativeCommands['include'];
-        var parseCommand = nativeCommands['parse'];
-        var extendCommand = nativeCommands['extend'];
-        var blockCommand = nativeCommands['block'];
-        var macroCommand = nativeCommands['macro'];
-        var debuggerCommand = nativeCommands['debugger'];
-        buffer.append('<div class="');
-        var option0 = { escape: 1 };
-        var params1 = [];
-        params1.push('content');
-        option0.params = params1;
-        var callRet2;
-        pos.line = 1;
-        pos.col = 33;
-        callRet2 = callFnUtil(tpl, scope, option0, buffer, ['getBaseCssClasses']);
-        if (callRet2 && callRet2.isBuffer) {
-            buffer = callRet2;
-            callRet2 = undefined;
-        }
-        buffer.writeEscaped(callRet2);
-        buffer.append('">');
-        var id3 = scope.resolve(['content']);
-        buffer.write(id3);
-        buffer.append('</div>');
-        return buffer;
-    };
-    module.exports.TPL_NAME = module.name;
+  };
+  exports = ContentBox;
+  return exports;
+}();
+module.exports = componentExtensionContentBox;
 });

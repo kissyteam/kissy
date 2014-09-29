@@ -136,6 +136,11 @@ eventDomGestureTap = function (exports) {
         if (UA.ios) {
           e.preventDefault();
         } else {
+          // note:
+          // do not use
+          // <a href = 'javascript:void(0)'>
+          // do use
+          // <a href = 'xx'>
           DomEvent.on(target.ownerDocument || target, 'click', {
             fn: preventDefault,
             once: 1

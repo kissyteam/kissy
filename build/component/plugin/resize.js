@@ -1,6 +1,1 @@
-/*
-Copyright 2014, KISSY v5.0.0
-MIT Licensed
-build time: Aug 26 16:05
-*/
-KISSY.add("component/plugin/resize",["resizable"],function(a,d,f,e){a=d("resizable");e.exports=a.extend({pluginBindUI:function(b){var c=b.$el;this.set("node",c);this.set("prefixCls",b.get("prefixCls"));this.on("resizeEnd",function(){var a=c.offset();b.setInternal("xy",[a.left,a.top]);b.setInternal("width",c.width());b.setInternal("height",c.height())})},pluginDestructor:function(){this.destroy()}})});
+modulex.add("component/plugin/resize",["resizable"],function(e,t,n){var i,r=e("resizable");i=function(e){var t=r;return e=t.extend({pluginBindUI:function(e){var t=e.$el,n=this;n.set("node",t),n.set("prefixCls",e.get("prefixCls")),n.on("resizeEnd",function(){var n=t.offset();e.setInternal("xy",[n.left,n.top]),e.setInternal("width",t.width()),e.setInternal("height",t.height())})},pluginDestructor:function(){this.destroy()}})}(),n.exports=i});

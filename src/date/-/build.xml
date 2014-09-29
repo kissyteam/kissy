@@ -1,4 +1,0 @@
-<project name="date.build" default="build-all" basedir="../">
-    <property name="component.name" value="date"/>
-    <import file="../../common.xml"/>
-</project>

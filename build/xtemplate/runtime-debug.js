@@ -39,7 +39,7 @@ xtemplateRuntimeUtil = function (exports) {
   var toString = Object.prototype.toString;
   exports = util = {
     isArray: Array.isArray || function (obj) {
-      return toString.call(obj);
+      return toString.call(obj) === '[object Array]';
     },
     keys: Object.keys || function (o) {
       var result = [];
@@ -111,34 +111,46 @@ xtemplateRuntimeUtil = function (exports) {
         return htmlEntities[m];
       });
     },
-    log: function () {
-      if (typeof console !== 'undefined') {
-        console.log.apply(console, arguments);
+    merge: function () {
+      var i = 0;
+      var len = arguments.length;
+      var ret = {};
+      for (; i < len; i++) {
+        var arg = arguments[i];
+        if (arg) {
+          util.mix(ret, arg);
+        }
       }
+      return ret;
     }
   };
   return exports;
 }();
 xtemplateRuntimeScope = function (exports) {
-  var undef;
-  function Scope(data) {
-    if (data !== undef) {
+  function Scope(data, affix, parent) {
+    if (data !== undefined) {
       this.data = data;
     } else {
       this.data = {};
     }
-    this.root = this;
+    if (parent) {
+      this.parent = parent;
+      this.root = parent.root;
+    } else {
+      this.parent = undefined;
+      this.root = this;
+    }
+    this.affix = affix || {};
+    this.ready = false;
   }
   Scope.prototype = {
     isScope: 1,
+    constructor: Scope,
     setParent: function (parentScope) {
       this.parent = parentScope;
       this.root = parentScope.root;
     },
     set: function (name, value) {
-      if (!this.affix) {
-        this.affix = {};
-      }
       this.affix[name] = value;
     },
     setData: function (data) {
@@ -149,9 +161,6 @@ xtemplateRuntimeScope = function (exports) {
     },
     mix: function (v) {
       var affix = this.affix;
-      if (!affix) {
-        affix = this.affix = {};
-      }
       for (var name in v) {
         affix[name] = v[name];
       }
@@ -160,75 +169,119 @@ xtemplateRuntimeScope = function (exports) {
       var data = this.data;
       var v;
       var affix = this.affix;
-      v = affix && affix[name];
-      if (v !== undef) {
-        return v;
-      }
-      if (data !== undef && data !== null) {
+      if (data != null) {
         v = data[name];
       }
-      if (v !== undef) {
+      if (v !== undefined) {
         return v;
       }
-      if (name === 'this') {
-        return data;
-      } else if (name === 'root') {
-        return this.root.data;
+      return affix[name];
+    },
+    resolveInternalOuter: function (parts) {
+      var part0 = parts[0];
+      var v;
+      var self = this;
+      var scope = self;
+      if (part0 === 'this') {
+        v = self.data;
+      } else if (part0 === 'root') {
+        scope = scope.root;
+        v = scope.data;
+      } else if (part0) {
+        do {
+          v = scope.get(part0);
+        } while (v === undefined && (scope = scope.parent));
+      } else {
+        return [scope.data];
+      }
+      return [
+        undefined,
+        v
+      ];
+    },
+    resolveInternal: function (parts) {
+      var ret = this.resolveInternalOuter(parts);
+      if (ret.length === 1) {
+        return ret[0];
+      }
+      var i;
+      var len = parts.length;
+      var v = ret[1];
+      for (i = 1; i < len; i++) {
+        v = v[parts[i]];
       }
       return v;
     },
-    resolve: function (parts, depth) {
+    resolveLooseInternal: function (parts) {
+      var ret = this.resolveInternalOuter(parts);
+      if (ret.length === 1) {
+        return ret[0];
+      }
+      var i;
+      var len = parts.length;
+      var v = ret[1];
+      for (i = 1; v != null && i < len; i++) {
+        v = v[parts[i]];
+      }
+      return v;
+    },
+    resolveUp: function (parts) {
+      return this.parent && this.parent.resolveInternal(parts);
+    },
+    resolveLooseUp: function (parts) {
+      return this.parent && this.parent.resolveLooseInternal(parts);
+    },
+    resolveOuter: function (parts, depth) {
       var self = this;
+      var scope = self;
       var v;
       if (!depth && parts.length === 1) {
         v = self.get(parts[0]);
-        if (v !== undef) {
-          return v;
+        if (v !== undefined) {
+          return [v];
         } else {
           depth = 1;
         }
       }
-      var len = parts.length;
-      var scope = self;
-      var i;
-      if (len && parts[0] === 'root') {
-        parts.shift();
-        scope = scope.root;
-        len--;
-      } else if (depth) {
+      if (depth) {
         while (scope && depth--) {
           scope = scope.parent;
         }
       }
       if (!scope) {
-        return undef;
+        return [undefined];
       }
-      if (!len) {
-        return scope.data;
+      return [
+        undefined,
+        scope
+      ];
+    },
+    resolveLoose: function (parts, depth) {
+      var ret = this.resolveOuter(parts, depth);
+      if (ret.length === 1) {
+        return ret[0];
       }
-      var part0 = parts[0];
-      do {
-        v = scope.get(part0);
-      } while (v === undef && (scope = scope.parent));
-      if (v && scope) {
-        for (i = 1; v && i < len; i++) {
-          v = v[parts[i]];
-        }
-        return v;
-      } else {
-        return undef;
+      return ret[1].resolveLooseInternal(parts);
+    },
+    resolve: function (parts, depth) {
+      var ret = this.resolveOuter(parts, depth);
+      if (ret.length === 1) {
+        return ret[0];
       }
+      return ret[1].resolveInternal(parts);
     }
   };
   exports = Scope;
   return exports;
 }();
 xtemplateRuntimeLinkedBuffer = function (exports) {
-  var undef;
   var util = xtemplateRuntimeUtil;
-  function Buffer(list) {
+  function Buffer(list, next, tpl) {
     this.list = list;
     this.init();
+    this.next = next;
+    this.ready = false;
+    this.tpl = tpl;
   }
   Buffer.prototype = {
     constructor: Buffer,
@@ -242,33 +295,61 @@ xtemplateRuntimeLinkedBuffer = function (exports) {
     },
     write: function (data) {
       if (data != null) {
-        this.append(data);
+        if (data.isBuffer) {
+          return data;
+        } else {
+          this.data += data;
+        }
       }
       return this;
     },
     writeEscaped: function (data) {
       if (data != null) {
-        this.append(util.escapeHtml(data));
+        if (data.isBuffer) {
+          return data;
+        } else {
+          this.data += util.escapeHtml(data);
+        }
       }
       return this;
     },
-    async: function (fn) {
+    insert: function () {
       var self = this;
       var list = self.list;
-      var asyncFragment = new Buffer(list);
-      var nextFragment = new Buffer(list);
-      nextFragment.next = self.next;
-      asyncFragment.next = nextFragment;
+      var tpl = self.tpl;
+      var nextFragment = new Buffer(list, self.next, tpl);
+      var asyncFragment = new Buffer(list, nextFragment, tpl);
       self.next = asyncFragment;
       self.ready = true;
+      return asyncFragment;
+    },
+    async: function (fn) {
+      var asyncFragment = this.insert();
+      var nextFragment = asyncFragment.next;
       fn(asyncFragment);
       return nextFragment;
     },
-    error: function (reason) {
+    error: function (e) {
       var callback = this.list.callback;
       if (callback) {
-        callback(reason, undef);
+        var tpl = this.tpl;
+        if (tpl) {
+          if (e instanceof Error) {
+          } else {
+            e = new Error(e);
+          }
+          var name = tpl.name;
+          var line = tpl.pos.line;
+          var errorStr = 'At ' + name + ':' + line + ': ';
+          e.stack = errorStr + e.stack;
+          e.message = errorStr + e.message;
+          e.xtpl = {
+            pos: { line: line },
+            name: name
+          };
+        }
         this.list.callback = null;
+        callback(e, undefined);
       }
     },
     end: function () {
@@ -283,7 +364,7 @@ xtemplateRuntimeLinkedBuffer = function (exports) {
   function LinkedBuffer(callback, config) {
     var self = this;
     self.config = config;
-    self.head = new Buffer(self);
+    self.head = new Buffer(self, undefined);
     self.callback = callback;
     this.init();
   }
@@ -297,18 +378,19 @@ xtemplateRuntimeLinkedBuffer = function (exports) {
     },
     end: function () {
       this.callback(null, this.data);
+      this.callback = null;
     },
     flush: function () {
       var self = this;
       var fragment = self.head;
       while (fragment) {
         if (fragment.ready) {
-          this.append(fragment.data);
+          this.data += fragment.data;
         } else {
+          self.head = fragment;
           return;
         }
         fragment = fragment.next;
-        self.head = fragment;
       }
       self.end();
     }
@@ -337,38 +419,62 @@ xtemplateRuntimeCommands = function (exports) {
       }
       return ret;
     },
-    each: function (scope, option, buffer) {
+    foreach: function (scope, option, buffer) {
       var params = option.params;
       var param0 = params[0];
       var xindexName = params[2] || 'xindex';
       var valueName = params[1];
-      var xcount;
-      var opScope;
-      var affix;
+      var xcount, opScope, affix, xindex;
+      if (param0) {
+        xcount = param0.length;
+        for (xindex = 0; xindex < xcount; xindex++) {
+          opScope = new Scope(param0[xindex], {
+            xcount: xcount,
+            xindex: xindex
+          }, scope);
+          affix = opScope.affix;
+          if (xindexName !== 'xindex') {
+            affix[xindexName] = xindex;
+            affix.xindex = undefined;
+          }
+          if (valueName) {
+            affix[valueName] = param0[xindex];
+          }
+          buffer = option.fn(opScope, buffer);
+        }
+      }
+      return buffer;
+    },
+    forin: function (scope, option, buffer) {
+      var params = option.params;
+      var param0 = params[0];
+      var xindexName = params[2] || 'xindex';
+      var valueName = params[1];
+      var opScope, affix, name;
+      if (param0) {
+        for (name in param0) {
+          opScope = new Scope(param0[name], { xindex: name }, scope);
+          affix = opScope.affix;
+          if (xindexName !== 'xindex') {
+            affix[xindexName] = name;
+            affix.xindex = undefined;
+          }
+          if (valueName) {
+            affix[valueName] = param0[name];
+          }
+          buffer = option.fn(opScope, buffer);
+        }
+      }
+      return buffer;
+    },
+    each: function (scope, option, buffer) {
+      var params = option.params;
+      var param0 = params[0];
       if (param0) {
         if (util.isArray(param0)) {
-          xcount = param0.length;
-          for (var xindex = 0; xindex < xcount; xindex++) {
-            opScope = new Scope(param0[xindex]);
-            affix = opScope.affix = { xcount: xcount };
-            affix[xindexName] = xindex;
-            if (valueName) {
-              affix[valueName] = param0[xindex];
-            }
-            opScope.setParent(scope);
-            buffer = option.fn(opScope, buffer);
-          }
+          return commands.foreach(scope, option, buffer);
         } else {
-          for (var name in param0) {
-            opScope = new Scope(param0[name]);
-            affix = opScope.affix = {};
-            affix[xindexName] = name;
-            if (valueName) {
-              affix[valueName] = param0[name];
-            }
-            opScope.setParent(scope);
-            buffer = option.fn(opScope, buffer);
-          }
+          return commands.forin(scope, option, buffer);
         }
       }
       return buffer;
@@ -377,8 +483,7 @@ xtemplateRuntimeCommands = function (exports) {
       var params = option.params;
       var param0 = params[0];
       if (param0) {
-        var opScope = new Scope(param0);
-        opScope.setParent(scope);
+        var opScope = new Scope(param0, undefined, scope);
         buffer = option.fn(opScope, buffer);
       }
       return buffer;
@@ -415,27 +520,9 @@ xtemplateRuntimeCommands = function (exports) {
       scope.mix(option.hash);
       return buffer;
     },
-    include: function (scope, option, buffer) {
-      var params = option.params;
-      var i, newScope;
-      var l = params.length;
-      newScope = scope;
-      if (option.hash) {
-        newScope = new Scope(option.hash);
-        newScope.setParent(scope);
-      }
-      for (i = 0; i < l; i++) {
-        buffer = this.root.include(params[i], this, newScope, option, buffer);
-      }
-      return buffer;
-    },
-    parse: function (scope, option, buffer) {
-      return commands.include.call(this, new Scope(), option, buffer);
-    },
-    extend: function (scope, option, buffer) {
-      this.runtime.extendTplName = option.params[0];
-      return buffer;
-    },
+    include: 1,
+    parse: 1,
+    extend: 1,
     block: function (scope, option, buffer) {
       var self = this;
       var runtime = self.runtime;
@@ -511,8 +598,8 @@ xtemplateRuntimeCommands = function (exports) {
           var newScope = new Scope(paramValues);
           buffer = macro.fn.call(self, newScope, buffer);
         } else {
-          var error = 'in file: ' + self.name + ' can not find macro: ' + name + '" at line ' + self.pos.line + ', col ' + self.pos.col;
-          throw new Error(error);
+          var error = 'can not find macro: ' + name;
+          buffer.error(error);
         }
       }
       return buffer;
@@ -532,6 +619,16 @@ xtemplateRuntime = function (exports) {
   var commands = {};
   var Scope = xtemplateRuntimeScope;
   var LinkedBuffer = xtemplateRuntimeLinkedBuffer;
+  function TplWrap(name, runtime, root, scope, buffer, originalName, fn) {
+    this.name = name;
+    this.originalName = originalName || name;
+    this.runtime = runtime;
+    this.root = root;
+    this.pos = { line: 1 };
+    this.scope = scope;
+    this.buffer = buffer;
+    this.fn = fn;
+  }
   function findCommand(runtimeCommands, instanceCommands, parts) {
     var name = parts[0];
     var cmd = runtimeCommands && runtimeCommands[name] || instanceCommands && instanceCommands[name] || commands[name];
@@ -543,7 +640,7 @@ xtemplateRuntime = function (exports) {
       for (var i = 1; i < len; i++) {
         cmd = cmd[parts[i]];
         if (!cmd) {
-          break;
+          return false;
         }
       }
     }
@@ -564,34 +661,21 @@ xtemplateRuntime = function (exports) {
     }
     return parts.join('/');
   }
-  function renderTpl(tpl, scope, buffer) {
-    buffer = tpl.fn(scope, buffer);
-    var runtime = tpl.runtime;
-    var extendTplName = runtime.extendTplName;
-    if (extendTplName) {
-      runtime.extendTplName = null;
-      buffer = tpl.root.include(extendTplName, tpl, scope, null, buffer);
-    }
-    return buffer.end();
-  }
   function callFn(tpl, scope, option, buffer, parts, depth) {
-    var error, caller, fn, command1;
+    var caller, fn, command1;
     if (!depth) {
       command1 = findCommand(tpl.runtime.commands, tpl.root.config.commands, parts);
     }
     if (command1) {
       return command1.call(tpl, scope, option, buffer);
-    } else {
-      error = 'in file: ' + tpl.name + ' can not call: ' + parts.join('.') + '" at line ' + tpl.pos.line + ', col ' + tpl.pos.col;
+    } else if (command1 !== false) {
+      caller = scope.resolve(parts.slice(0, -1), depth);
+      fn = caller[parts[parts.length - 1]];
+      if (fn) {
+        return fn.apply(caller, option.params);
+      }
     }
-    caller = scope.resolve(parts.slice(0, -1), depth);
-    fn = caller[parts[parts.length - 1]];
-    if (fn) {
-      return fn.apply(caller, option.params);
-    }
-    if (error) {
-      throw new Error(error);
-    }
+    buffer.error('Command Not Found: ' + parts.join('.'));
     return buffer;
   }
   var utils = {
@@ -602,18 +686,19 @@ xtemplateRuntime = function (exports) {
   };
   var loader = {
     cache: {},
-    load: function (params, callback) {
-      var name = params.name;
+    load: function (tpl, callback) {
       var cache = this.cache;
-      if (cache[name]) {
-        return callback(undefined, cache[name]);
+      var name = tpl.name;
+      var cached = cache[name];
+      if (cached !== undefined) {
+        return callback(undefined, cached);
       }
       require([name], function (tpl) {
         cache[name] = tpl;
         callback(undefined, tpl);
       }, function () {
-        var error = 'template "' + params.name + '" does not exist';
-        util.log(error, 'error');
+        var error = 'template "' + name + '" does not exist';
+        console.error(error);
         callback(error);
       });
     }
@@ -627,7 +712,7 @@ xtemplateRuntime = function (exports) {
   }
   util.mix(XTemplateRuntime, {
     loader: loader,
-    version: '1.3.0',
+    version: '3.2.2',
     nativeCommands: nativeCommands,
     utils: utils,
     util: util,
@@ -638,6 +723,70 @@ xtemplateRuntime = function (exports) {
       delete commands[commandName];
     }
   });
+  function resolve(self, subName, parentName) {
+    if (subName.charAt(0) !== '.') {
+      return subName;
+    }
+    var key = parentName + '_ks_' + subName;
+    var nameResolveCache = self.subNameResolveCache;
+    var cached = nameResolveCache[key];
+    if (cached) {
+      return cached;
+    }
+    subName = nameResolveCache[key] = getSubNameFromParentName(parentName, subName);
+    return subName;
+  }
+  function includeInternal(self, scope, escape, buffer, tpl, originalName) {
+    var name = resolve(self, originalName, tpl.name);
+    var newBuffer = buffer.insert();
+    var next = newBuffer.next;
+    loadInternal(self, name, tpl.runtime, scope, newBuffer, originalName, escape);
+    return next;
+  }
+  function includeModuleInternal(self, scope, buffer, tpl, tplFn) {
+    var newBuffer = buffer.insert();
+    var next = newBuffer.next;
+    var newTpl = new TplWrap(tplFn.TPL_NAME, tpl.runtime, self, scope, newBuffer, undefined, tplFn);
+    newBuffer.tpl = newTpl;
+    renderTpl(newTpl);
+    return next;
+  }
+  function loadInternal(self, name, runtime, scope, buffer, originalName, escape) {
+    var tpl = new TplWrap(name, runtime, self, scope, buffer, originalName);
+    buffer.tpl = tpl;
+    self.config.loader.load(tpl, function (error, tplFn) {
+      if (typeof tplFn === 'function') {
+        tpl.fn = tplFn;
+        renderTpl(tpl);
+      } else if (error) {
+        buffer.error(error);
+      } else if (tplFn) {
+        if (escape) {
+          buffer.writeEscaped(tplFn);
+        } else {
+          buffer.data += tplFn;
+        }
+        buffer.end();
+      }
+    });
+  }
+  function renderTpl(tpl) {
+    var buffer = tpl.fn();
+    if (buffer) {
+      var runtime = tpl.runtime;
+      var extendTplName = runtime.extendTplName;
+      var extendTplFn = runtime.extendTplFn;
+      if (extendTplFn) {
+        runtime.extendTplName = null;
+        runtime.extendTplFn = null;
+        buffer = includeModuleInternal(tpl.root, tpl.scope, buffer, tpl, extendTplFn);
+      } else if (extendTplName) {
+        runtime.extendTplName = null;
+        buffer = includeInternal(tpl.root, tpl.scope, 0, buffer, tpl, extendTplName);
+      }
+      return buffer.end();
+    }
+  }
   XTemplateRuntime.prototype = {
     constructor: XTemplateRuntime,
     Scope: Scope,
@@ -654,58 +803,34 @@ xtemplateRuntime = function (exports) {
       config.commands = config.commands || {};
       config.commands[commandName] = fn;
     },
-    resolve: function (subName, parentName) {
-      if (subName.charAt(0) !== '.') {
-        return subName;
+    include: function (scope, option, buffer, tpl) {
+      var params = option.params;
+      var newScope;
+      newScope = scope;
+      var hash = option.hash;
+      var escape = option && option.escape;
+      if (hash) {
+        newScope = new Scope(hash, undefined, scope);
       }
-      if (!parentName) {
-        var error = 'parent template does not have name' + ' for relative sub tpl name: ' + subName;
-        throw new Error(error);
-      }
-      var nameResolveCache = this.subNameResolveCache[parentName] = this.subNameResolveCache[parentName] || {};
-      if (nameResolveCache[subName]) {
-        return nameResolveCache[subName];
-      }
-      subName = nameResolveCache[subName] = getSubNameFromParentName(parentName, subName);
-      return subName;
+      buffer = includeInternal(this, newScope, escape, buffer, tpl, params[0]);
+      return buffer;
     },
-    include: function (subTplName, tpl, scope, option, buffer) {
-      var self = this;
-      var parentName = tpl.name;
-      var resolvedSubTplName = self.resolve(subTplName, parentName);
-      return buffer.async(function (newBuffer) {
-        self.config.loader.load({
-          root: self,
-          parentName: parentName,
-          originalName: subTplName,
-          name: resolvedSubTplName,
-          scope: scope,
-          option: option
-        }, function (error, tplFn) {
-          if (error) {
-            newBuffer.error(error);
-          } else if (typeof tplFn === 'string') {
-            if (option && option.escaped) {
-              newBuffer.writeEscaped(tplFn);
-            } else {
-              newBuffer.append(tplFn);
-            }
-            newBuffer.end();
-          } else {
-            renderTpl({
-              root: tpl.root,
-              fn: tplFn,
-              name: resolvedSubTplName,
-              runtime: tpl.runtime
-            }, scope, newBuffer);
-          }
-        });
-      });
+    includeModule: function (scope, option, buffer, tpl) {
+      var params = option.params;
+      var newScope;
+      newScope = scope;
+      var hash = option.hash;
+      if (hash) {
+        newScope = new Scope(hash, undefined, scope);
+      }
+      buffer = includeModuleInternal(this, newScope, buffer, tpl, params[0]);
+      return buffer;
     },
     render: function (data, option, callback) {
       var html = '';
       var self = this;
       var fn = self.fn;
+      var config = self.config;
       if (typeof option === 'function') {
         callback = option;
         option = null;
@@ -721,17 +846,25 @@ xtemplateRuntime = function (exports) {
         html = ret;
       };
       var name = self.config.name;
-      if (!name && fn.TPL_NAME) {
+      if (!name && fn && fn.TPL_NAME) {
         name = fn.TPL_NAME;
       }
       var scope = new Scope(data);
-      var buffer = new XTemplateRuntime.LinkedBuffer(callback, self.config).head;
-      renderTpl({
-        name: name,
-        fn: fn,
-        runtime: { commands: option.commands },
-        root: self
-      }, scope, buffer);
+      var buffer = new XTemplateRuntime.LinkedBuffer(callback, config).head;
+      var tpl = new TplWrap(name, { commands: option.commands }, self, scope, buffer, name, fn);
+      buffer.tpl = tpl;
+      if (!fn) {
+        config.loader.load(tpl, function (err, fn) {
+          if (fn) {
+            tpl.fn = self.fn = fn;
+            renderTpl(tpl);
+          } else if (err) {
+            buffer.error(err);
+          }
+        });
+        return html;
+      }
+      renderTpl(tpl);
       return html;
     }
   };
