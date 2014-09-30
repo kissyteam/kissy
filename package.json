@@ -29,6 +29,7 @@
     "postupdate": "node ./node_modules/bower/bin/bower update"
   },
   "devDependencies": {
+    "aggregate-bower": "^1.0.5",
     "bower": "^1.3.9",
     "colors": "~0.6.2",
     "commander": "~2.2.0",

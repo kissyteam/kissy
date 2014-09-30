@@ -4,8 +4,8 @@ modulex.add("date-picker/i18n/en-us", [], function(require, exports, module) {
 combined modules:
 date-picker/i18n/en-us
 */
-var date_picker_i18n_en_us;
-date_picker_i18n_en_us = function (exports) {
+var datePickerI18nEnUs;
+datePickerI18nEnUs = function (exports) {
   /**
    * i18n resources for date-picker
    * @ignore
@@ -40,5 +40,5 @@ date_picker_i18n_en_us = function (exports) {
   };
   return exports;
 }();
-module.exports = date_picker_i18n_en_us;
+module.exports = datePickerI18nEnUs;
 });

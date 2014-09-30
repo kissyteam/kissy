@@ -1,14 +1,14 @@
 modulex.add("date-picker", ["xtemplate/runtime","util","event-dom/gesture/tap","node","component/control","gregorian-calendar-format","gregorian-calendar","i18n!date-picker","component/extension/shim","component/extension/align"], function(require, exports, module) {
-var xtemplate_runtime = require("xtemplate/runtime");
+var xtemplateRuntime = require("xtemplate/runtime");
 var _util_ = require("util");
-var event_dom_gesture_tap = require("event-dom/gesture/tap");
+var eventDomGestureTap = require("event-dom/gesture/tap");
 var node = require("node");
-var component_control = require("component/control");
-var gregorian_calendar_format = require("gregorian-calendar-format");
-var gregorian_calendar = require("gregorian-calendar");
-var i18n_date_picker = require("i18n!date-picker");
-var component_extension_shim = require("component/extension/shim");
-var component_extension_align = require("component/extension/align");
+var componentControl = require("component/control");
+var gregorianCalendarFormat = require("gregorian-calendar-format");
+var gregorianCalendar = require("gregorian-calendar");
+var i18nDatePicker = require("i18n!date-picker");
+var componentExtensionShim = require("component/extension/shim");
+var componentExtensionAlign = require("component/extension/align");
 /*
 combined modules:
 date-picker
@@ -32,8 +32,8 @@ date-picker/xtpl/picker
 date-picker/xtpl/popup-render
 date-picker/xtpl/popup
 */
-var date_picker_xtpl_decades, date_picker_xtpl_decades_render, date_picker_xtpl_years, date_picker_xtpl_year_panel, date_picker_xtpl_months, date_picker_xtpl_month_panel, date_picker_xtpl_picker, date_picker_xtpl_popup, date_picker_xtpl_decade_panel, date_picker_xtpl_years_render, date_picker_xtpl_year_panel_render, date_picker_xtpl_months_render, date_picker_xtpl_month_panel_render, date_picker_xtpl_picker_render, date_picker_xtpl_popup_render, date_picker_xtpl_decade_panel_render, date_picker_decade_panel, date_picker_year_panel, date_picker_month_panel, date_picker;
-date_picker_xtpl_decades = function (exports) {
+var datePickerXtplDecades, datePickerXtplDecadesRender, datePickerXtplYears, datePickerXtplYearPanel, datePickerXtplMonths, datePickerXtplMonthPanel, datePickerXtplPicker, datePickerXtplPopup, datePickerXtplDecadePanel, datePickerXtplYearsRender, datePickerXtplYearPanelRender, datePickerXtplMonthsRender, datePickerXtplMonthPanelRender, datePickerXtplPickerRender, datePickerXtplPopupRender, datePickerXtplDecadePanelRender, datePickerDecadePanel, datePickerYearPanel, datePickerMonthPanel, datePicker;
+datePickerXtplDecades = function (exports) {
   var ret = exports = function decades(undefined) {
     var t;
     var t0;
@@ -215,16 +215,16 @@ date_picker_xtpl_decades = function (exports) {
   ret.TPL_NAME = module.id || module.name;
   return exports;
 }();
-date_picker_xtpl_decades_render = function (exports) {
-  var tpl = date_picker_xtpl_decades;
-  var XTemplateRuntime = xtemplate_runtime;
+datePickerXtplDecadesRender = function (exports) {
+  var tpl = datePickerXtplDecades;
+  var XTemplateRuntime = xtemplateRuntime;
   var instance = new XTemplateRuntime(tpl);
   exports = function () {
     return instance.render.apply(instance, arguments);
   };
   return exports;
 }();
-date_picker_xtpl_years = function (exports) {
+datePickerXtplYears = function (exports) {
   var ret = exports = function years(undefined) {
     var t;
     var t0;
@@ -399,7 +399,7 @@ date_picker_xtpl_years = function (exports) {
   ret.TPL_NAME = module.id || module.name;
   return exports;
 }();
-date_picker_xtpl_year_panel = function (exports) {
+datePickerXtplYearPanel = function (exports) {
   var ret = exports = function yearPanel(undefined) {
     var t;
     var t0;
@@ -532,7 +532,7 @@ date_picker_xtpl_year_panel = function (exports) {
     buffer.data += '">\r\n        ';
     pos.line = 30;
     var callRet14;
-    buffer = root.includeModule(scope, { params: [date_picker_xtpl_years] }, buffer, tpl);
+    buffer = root.includeModule(scope, { params: [datePickerXtplYears] }, buffer, tpl);
     buffer = buffer.write(callRet14);
     buffer.data += '\r\n        </tbody>\r\n    </table>\r\n</div>';
     return buffer;
@@ -540,7 +540,7 @@ date_picker_xtpl_year_panel = function (exports) {
   ret.TPL_NAME = module.id || module.name;
   return exports;
 }();
-date_picker_xtpl_months = function (exports) {
+datePickerXtplMonths = function (exports) {
   var ret = exports = function months(undefined) {
     var t;
     var t0;
@@ -665,7 +665,7 @@ date_picker_xtpl_months = function (exports) {
   ret.TPL_NAME = module.id || module.name;
   return exports;
 }();
-date_picker_xtpl_month_panel = function (exports) {
+datePickerXtplMonthPanel = function (exports) {
   var ret = exports = function monthPanel(undefined) {
     var t;
     var t0;
@@ -793,7 +793,7 @@ date_picker_xtpl_month_panel = function (exports) {
     buffer.data += '">\r\n        ';
     pos.line = 28;
     var callRet13;
-    buffer = root.includeModule(scope, { params: [date_picker_xtpl_months] }, buffer, tpl);
+    buffer = root.includeModule(scope, { params: [datePickerXtplMonths] }, buffer, tpl);
     buffer = buffer.write(callRet13);
     buffer.data += '\r\n        </tbody>\r\n    </table>\r\n</div>';
     return buffer;
@@ -801,7 +801,7 @@ date_picker_xtpl_month_panel = function (exports) {
   ret.TPL_NAME = module.id || module.name;
   return exports;
 }();
-date_picker_xtpl_picker = function (exports) {
+datePickerXtplPicker = function (exports) {
   var ret = exports = function picker(undefined) {
     var t;
     var t0;
@@ -1092,7 +1092,7 @@ date_picker_xtpl_picker = function (exports) {
   ret.TPL_NAME = module.id || module.name;
   return exports;
 }();
-date_picker_xtpl_popup = function (exports) {
+datePickerXtplPopup = function (exports) {
   var ret = exports = function popup(undefined) {
     var t;
     var t0;
@@ -1142,7 +1142,7 @@ date_picker_xtpl_popup = function (exports) {
     buffer.data += '">\r\n    ';
     pos.line = 2;
     var callRet1;
-    buffer = root.includeModule(scope, { params: [date_picker_xtpl_picker] }, buffer, tpl);
+    buffer = root.includeModule(scope, { params: [datePickerXtplPicker] }, buffer, tpl);
     buffer = buffer.write(callRet1);
     buffer.data += '\r\n</div>';
     return buffer;
@@ -1150,7 +1150,7 @@ date_picker_xtpl_popup = function (exports) {
   ret.TPL_NAME = module.id || module.name;
   return exports;
 }();
-date_picker_xtpl_decade_panel = function (exports) {
+datePickerXtplDecadePanel = function (exports) {
   var ret = exports = function decadePanel(undefined) {
     var t;
     var t0;
@@ -1262,7 +1262,7 @@ date_picker_xtpl_decade_panel = function (exports) {
     buffer.data += '">\r\n        ';
     pos.line = 21;
     var callRet11;
-    buffer = root.includeModule(scope, { params: [date_picker_xtpl_decades] }, buffer, tpl);
+    buffer = root.includeModule(scope, { params: [datePickerXtplDecades] }, buffer, tpl);
     buffer = buffer.write(callRet11);
     buffer.data += '\r\n        </tbody>\r\n    </table>\r\n</div>';
     return buffer;
@@ -1270,75 +1270,75 @@ date_picker_xtpl_decade_panel = function (exports) {
   ret.TPL_NAME = module.id || module.name;
   return exports;
 }();
-date_picker_xtpl_years_render = function (exports) {
-  var tpl = date_picker_xtpl_years;
-  var XTemplateRuntime = xtemplate_runtime;
+datePickerXtplYearsRender = function (exports) {
+  var tpl = datePickerXtplYears;
+  var XTemplateRuntime = xtemplateRuntime;
   var instance = new XTemplateRuntime(tpl);
   exports = function () {
     return instance.render.apply(instance, arguments);
   };
   return exports;
 }();
-date_picker_xtpl_year_panel_render = function (exports) {
-  var tpl = date_picker_xtpl_year_panel;
-  var XTemplateRuntime = xtemplate_runtime;
+datePickerXtplYearPanelRender = function (exports) {
+  var tpl = datePickerXtplYearPanel;
+  var XTemplateRuntime = xtemplateRuntime;
   var instance = new XTemplateRuntime(tpl);
   exports = function () {
     return instance.render.apply(instance, arguments);
   };
   return exports;
 }();
-date_picker_xtpl_months_render = function (exports) {
-  var tpl = date_picker_xtpl_months;
-  var XTemplateRuntime = xtemplate_runtime;
+datePickerXtplMonthsRender = function (exports) {
+  var tpl = datePickerXtplMonths;
+  var XTemplateRuntime = xtemplateRuntime;
   var instance = new XTemplateRuntime(tpl);
   exports = function () {
     return instance.render.apply(instance, arguments);
   };
   return exports;
 }();
-date_picker_xtpl_month_panel_render = function (exports) {
-  var tpl = date_picker_xtpl_month_panel;
-  var XTemplateRuntime = xtemplate_runtime;
+datePickerXtplMonthPanelRender = function (exports) {
+  var tpl = datePickerXtplMonthPanel;
+  var XTemplateRuntime = xtemplateRuntime;
   var instance = new XTemplateRuntime(tpl);
   exports = function () {
     return instance.render.apply(instance, arguments);
   };
   return exports;
 }();
-date_picker_xtpl_picker_render = function (exports) {
-  var tpl = date_picker_xtpl_picker;
-  var XTemplateRuntime = xtemplate_runtime;
+datePickerXtplPickerRender = function (exports) {
+  var tpl = datePickerXtplPicker;
+  var XTemplateRuntime = xtemplateRuntime;
   var instance = new XTemplateRuntime(tpl);
   exports = function () {
     return instance.render.apply(instance, arguments);
   };
   return exports;
 }();
-date_picker_xtpl_popup_render = function (exports) {
-  var tpl = date_picker_xtpl_popup;
-  var XTemplateRuntime = xtemplate_runtime;
+datePickerXtplPopupRender = function (exports) {
+  var tpl = datePickerXtplPopup;
+  var XTemplateRuntime = xtemplateRuntime;
   var instance = new XTemplateRuntime(tpl);
   exports = function () {
     return instance.render.apply(instance, arguments);
   };
   return exports;
 }();
-date_picker_xtpl_decade_panel_render = function (exports) {
-  var tpl = date_picker_xtpl_decade_panel;
-  var XTemplateRuntime = xtemplate_runtime;
+datePickerXtplDecadePanelRender = function (exports) {
+  var tpl = datePickerXtplDecadePanel;
+  var XTemplateRuntime = xtemplateRuntime;
   var instance = new XTemplateRuntime(tpl);
   exports = function () {
     return instance.render.apply(instance, arguments);
   };
   return exports;
 }();
-date_picker_decade_panel = function (exports) {
+datePickerDecadePanel = function (exports) {
   var util = _util_;
-  var TapGesture = event_dom_gesture_tap;
+  var TapGesture = eventDomGestureTap;
   var tap = TapGesture.TAP;
   var $ = node;
-  var Control = component_control, DecadePanelTpl = date_picker_xtpl_decade_panel_render, MonthsTpl = date_picker_xtpl_decades_render;
+  var Control = componentControl, DecadePanelTpl = datePickerXtplDecadePanelRender, MonthsTpl = datePickerXtplDecadesRender;
   function prepareYears(self, view) {
     var value = self.get('value');
     var currentYear = value.getYear();
@@ -1447,13 +1447,13 @@ date_picker_decade_panel = function (exports) {
   });
   return exports;
 }();
-date_picker_year_panel = function (exports) {
+datePickerYearPanel = function (exports) {
   var util = _util_;
-  var Control = component_control, DecadePanel = date_picker_decade_panel;
-  var TapGesture = event_dom_gesture_tap;
+  var Control = componentControl, DecadePanel = datePickerDecadePanel;
+  var TapGesture = eventDomGestureTap;
   var tap = TapGesture.TAP;
   var $ = node;
-  var DateFormat = gregorian_calendar_format, YearsTpl = date_picker_xtpl_years_render, YearPanelTpl = date_picker_xtpl_year_panel_render;
+  var DateFormat = gregorianCalendarFormat, YearsTpl = datePickerXtplYearsRender, YearPanelTpl = datePickerXtplYearPanelRender;
   function prepareYears(self) {
     var value = self.get('value');
     var currentYear = value.getYear();
@@ -1594,11 +1594,11 @@ date_picker_year_panel = function (exports) {
   });
   return exports;
 }();
-date_picker_month_panel = function (exports) {
+datePickerMonthPanel = function (exports) {
   var util = _util_;
-  var Control = component_control, YearPanel = date_picker_year_panel;
-  var DateFormat = gregorian_calendar_format, MonthsTpl = date_picker_xtpl_months_render, MonthPanelTpl = date_picker_xtpl_month_panel_render;
-  var TapGesture = event_dom_gesture_tap;
+  var Control = componentControl, YearPanel = datePickerYearPanel;
+  var DateFormat = gregorianCalendarFormat, MonthsTpl = datePickerXtplMonthsRender, MonthPanelTpl = datePickerXtplMonthPanelRender;
+  var TapGesture = eventDomGestureTap;
   var tap = TapGesture.TAP;
   var $ = node;
   function prepareMonths(self) {
@@ -1730,13 +1730,13 @@ date_picker_month_panel = function (exports) {
   });
   return exports;
 }();
-date_picker = function (exports) {
+datePicker = function (exports) {
   var util = _util_;
-  var $ = node, GregorianCalendar = gregorian_calendar, locale = i18n_date_picker, Control = component_control, MonthPanel = date_picker_month_panel;
-  var TapGesture = event_dom_gesture_tap;
+  var $ = node, GregorianCalendar = gregorianCalendar, locale = i18nDatePicker, Control = componentControl, MonthPanel = datePickerMonthPanel;
+  var TapGesture = eventDomGestureTap;
   var tap = TapGesture.TAP;
   var KeyCode = $.Event.KeyCode;
-  var DateTimeFormat = gregorian_calendar_format, PickerTpl = date_picker_xtpl_picker_render;
+  var DateTimeFormat = gregorianCalendarFormat, PickerTpl = datePickerXtplPickerRender;
   var dateRowTplStart = '<tr role="row">';
   var dateRowTplEnd = '</tr>';
   var dateCellTpl = '<td role="gridcell" data-index="{index}" title="{title}" class="{cls}">{content}</td>';
@@ -2196,7 +2196,7 @@ date_picker = function (exports) {
       }
     }
   });
-  var PopupPickerTpl = date_picker_xtpl_popup_render, Shim = component_extension_shim, AlignExtension = component_extension_align;
+  var PopupPickerTpl = datePickerXtplPopupRender, Shim = componentExtensionShim, AlignExtension = componentExtensionAlign;
   DatePicker.Popup = DatePicker.extend([
     Shim,
     AlignExtension
@@ -2206,5 +2206,5 @@ date_picker = function (exports) {
   });
   return exports;
 }();
-module.exports = date_picker;
+module.exports = datePicker;
 });

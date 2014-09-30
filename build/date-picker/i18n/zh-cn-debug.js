@@ -4,8 +4,8 @@ modulex.add("date-picker/i18n/zh-cn", [], function(require, exports, module) {
 combined modules:
 date-picker/i18n/zh-cn
 */
-var date_picker_i18n_zh_cn;
-date_picker_i18n_zh_cn = function (exports) {
+var datePickerI18nZhCn;
+datePickerI18nZhCn = function (exports) {
   /**
    * i18n resources for date-picker
    * @ignore
@@ -40,5 +40,5 @@ date_picker_i18n_zh_cn = function (exports) {
   };
   return exports;
 }();
-module.exports = date_picker_i18n_zh_cn;
+module.exports = datePickerI18nZhCn;
 });
