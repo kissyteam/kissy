@@ -78,6 +78,22 @@ mx.config("requires",{
         "component/extension/align",
         "i18n!date-picker"
     ],
+    "dd/plugin/constrain": [
+        "base",
+        "node"
+    ],
+    "dd/plugin/proxy": [
+        "dd"
+    ],
+    "dd/plugin/scroll": [
+        "dd"
+    ],
+    "dd": [
+        "base",
+        "node",
+        "event-dom/gesture/basic",
+        "event-dom/gesture/pan"
+    ],
     "event-dom/base": [
         "event-base",
         "dom",

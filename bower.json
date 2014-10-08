@@ -38,6 +38,8 @@
         "modulex-router": "modulex-router#master",
         "modulex-component": "modulex-component#master",
         "modulex-date-picker": "modulex-date-picker#master",
+        "modulex-dd": "modulex-dd#master",
+        "modulex-css": "modulex-css#master",
         "logger-manager": "logger-manager#master"
     },
     "ignore": [
