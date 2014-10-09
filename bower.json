@@ -12,7 +12,7 @@
         "library"
     ],
     "license": "MIT",
-    "devDependencies": {
+    "dependencies": {
         "modulex": "modulex#master",
         "xtemplate": "xtemplate#3.2.2",
         "modulex-util": "modulex-util#master",
