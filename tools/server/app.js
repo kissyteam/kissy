@@ -103,8 +103,6 @@ function startServer(port) {
 
     require('./router/gen')(app);
 
-    require('./router/plato')(app);
-
     require('./router/sync')(app);
 
     app.get('/crossdomain.xml', function (req, res) {

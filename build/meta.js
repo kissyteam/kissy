@@ -155,6 +155,13 @@ mx.config("requires",{
         "event-dom",
         "anim"
     ],
+    "resizable/plugin/proxy": [
+        "base",
+        "node"
+    ],
+    "resizable": [
+        "dd"
+    ],
     "router": [
         "url",
         "event-dom",
