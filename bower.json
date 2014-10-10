@@ -40,6 +40,8 @@
         "modulex-date-picker": "modulex-date-picker#master",
         "modulex-dd": "modulex-dd#master",
         "modulex-css": "modulex-css#master",
+        "modulex-swf": "modulex-swf#master",
+        "modulex-stylesheet": "modulex-stylesheet#master",
         "modulex-resizable": "modulex-resizable#master",
         "logger-manager": "logger-manager#master"
     },
