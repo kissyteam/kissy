@@ -1,5 +1,0 @@
-<project name="button.build" default="build" basedir=".">
-    <property name="component.name" value="button"/>
-    <import file="../dpl-css.xml"/>
-    <import file="../common.xml"/>
-</project>

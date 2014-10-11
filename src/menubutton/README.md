@@ -1,4 +1,0 @@
-# MenuButton Class
-
-MenuButton Component
-

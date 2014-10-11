@@ -1,5 +1,0 @@
-<project name="separator.build" default="build" basedir=".">
-    <property name="component.name" value="separator"/>
-
-    <import file="../common.xml"/>
-</project>

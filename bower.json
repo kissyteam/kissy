@@ -43,6 +43,13 @@
         "modulex-swf": "modulex-swf#master",
         "modulex-stylesheet": "modulex-stylesheet#master",
         "modulex-resizable": "modulex-resizable#master",
+
+        "modulex-combobox": "modulex-combobox#master",
+        "modulex-menubutton": "modulex-menubutton#master",
+        "modulex-menu": "modulex-menu#master",
+        "modulex-button": "modulex-button#master",
+        "modulex-separator": "modulex-separator#master",
+
         "logger-manager": "logger-manager#master"
     },
     "ignore": [
