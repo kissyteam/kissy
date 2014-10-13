@@ -1,74 +1,34 @@
 {
-  "name": "kissy",
-  "version": "5.0.0-alpha.12",
-  "description": "KISSY",
-  "author": "yiminghe <yiminghe@gmail.com>",
-  "homepage": "http://docs.kissyui.com",
-  "bugs": {
-    "url": "https://github.com/kissyteam/kissy/issues"
-  },
-  "contributors": [
-    "lifesinger <lifesinger@gmail.com>",
-    "lizzie <shengyan1985@gmail.com>",
-    "satans17 <satans17@gmail.com>",
-    "yyfrankyy <yyfrankyy@gmail.com>",
-    "Jayli <lijing00333@163.com>",
-    "dxq613 <dxq613@gmail.com>",
-    "fool2fish <fool2fish@gmail.com>",
-    "kingfo <oicuicu@gmail.com>"
-  ],
-  "engines": {
-    "node": "~0.10"
-  },
-  "main": "./build/",
-  "scripts": {
-    "test": "exit 0",
-    "start": "node ./tools/server/start",
-    "stop": "node ./tools/server/stop",
-    "postinstall": "node ./node_modules/bower/bin/bower install",
-    "postupdate": "node ./node_modules/bower/bin/bower update"
-  },
-  "devDependencies": {
-    "aggregate-bower": "^1.0.5",
-    "bower": "^1.3.9",
-    "colors": "~0.6.2",
-    "commander": "~2.2.0",
-    "debug": "~0.7.4",
-    "deps-optimizer": "~0.1",
-    "escodegen": "~1.3.3",
-    "esprima": "~1.2.2",
-    "estraverse": "~1.5.0",
-    "express": "3.3.4",
-    "fs-extra": "^0.11.0",
-    "grunt": "^0.4.5",
-    "jscs": "~1.0.15",
-    "jshint": "~2.5.1",
-    "kison": "*",
-    "lodash": "~2.4.1",
-    "logger-manager": "*",
-    "mime": "~1.2.11",
-    "mkdirp": "~0.5.0",
-    "modulex-util": "^1.1.0",
-    "node-jscover": "*",
-    "plato": "~1.0.1",
-    "q": "~1.0.0",
-    "recluster": "~0.3.6",
-    "request": "~2.27.0",
-    "sauce-tunnel": "~2.0.6",
-    "saucelabs": "~0.1.1",
-    "walk": "~2.3.3"
-  },
-  "notes": [
-    "express 3.3.8-3.4.0 cors bug"
-  ],
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/kissyteam/kissy/blob/master/LICENSE.md"
+    "name": "kissy",
+    "version": "5.0.0-alpha.13",
+    "description": "KISSY",
+    "author": "yiminghe <yiminghe@gmail.com>",
+    "homepage": "http://docs.kissyui.com",
+    "bugs": {
+        "url": "https://github.com/kissyteam/kissy/issues"
+    },
+    "contributors": [
+        "lifesinger <lifesinger@gmail.com>",
+        "lizzie <shengyan1985@gmail.com>",
+        "satans17 <satans17@gmail.com>",
+        "yyfrankyy <yyfrankyy@gmail.com>",
+        "Jayli <lijing00333@163.com>",
+        "dxq613 <dxq613@gmail.com>",
+        "fool2fish <fool2fish@gmail.com>",
+        "kingfo <oicuicu@gmail.com>"
+    ],
+    "engines": {
+        "node": ">=0.10"
+    },
+    "main": "./build/",
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/kissyteam/kissy/blob/master/LICENSE.md"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/kissyteam/kissy.git"
     }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/kissyteam/kissy.git"
-  }
 }
