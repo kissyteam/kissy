@@ -15,6 +15,10 @@ bower install
 node build
 ```
 
+## Modules
+
+[http://kissyteam.github.io/badgeboard/](http://kissyteam.github.io/badgeboard/)
+
 ## Questions?
 
  - Blog: <http://blog.kissyui.com>
