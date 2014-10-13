@@ -23,3 +23,5 @@ aggregateBower(bowerDir,buildDir);
 generateSeedJs();
 
 console.log('done...');
+
+
