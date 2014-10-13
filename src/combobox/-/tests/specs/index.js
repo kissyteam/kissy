@@ -1,2 +1,0 @@
-require('./simple');
-require('./validator');

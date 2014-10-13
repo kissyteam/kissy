@@ -1,3 +1,0 @@
-# SplitButton Class
-
-SplitButton Component

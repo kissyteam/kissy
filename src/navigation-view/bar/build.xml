@@ -1,4 +1,0 @@
-<project name="navigation-view/bar.build" default="build" basedir=".">
-    <property name="component.name" value='navigation-view/bar'/>
-    <import file="../../common.xml"/>
-</project>

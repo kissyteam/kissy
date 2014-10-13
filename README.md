@@ -1,6 +1,6 @@
 # KISSY
 
-> A Powerful JavaScript Framework
+> A Powerful Collection Of Modules
 
 ## Vision
 

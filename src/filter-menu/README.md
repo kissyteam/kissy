@@ -1,4 +1,0 @@
-# Menu Class
-
-Menu Component
-
