@@ -12,7 +12,7 @@
 npm install bower -g
 npm install
 bower install
-node build
+npm run build
 ```
 
 ## Modules
