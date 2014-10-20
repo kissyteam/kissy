@@ -15,8 +15,17 @@ function generateSeedJs() {
         seedDebugJsContent += fs.readFileSync(debugFilePath).toString();
         seedJsContent += fs.readFileSync(miniFilePath).toString();
     }
+
+    seedDebugJsContent += getExtraContent();
+    seedJsContent += getExtraContent();
+
     fs.writeFileSync(path.join(buildDir, 'seed-debug.js'), seedDebugJsContent + inferBaseCode);
     fs.writeFileSync(path.join(buildDir, 'seed.js'), seedJsContent + inferBaseCode);
+}
+
+function getExtraContent(){
+    var kgConfigContent = '\nif( location !== undefined ){ modulex.config({ packages : { kg : { base : "//g.alicdn.com/kg/" } } }) }';
+    return kgConfigContent;
 }
 
 aggregateBower(bowerDir, buildDir);
