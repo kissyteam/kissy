@@ -3,7 +3,9 @@ var path = require('path');
 var bowerDir = path.resolve(process.cwd(), 'bower_components');
 var buildDir = path.resolve(process.cwd(), 'build');
 var aggregateBower = require('aggregate-bower');
-var inferBaseCode = '\nmodulex.init({name:"seed"});';
+var inferBaseCode = 'modulex.init({name:"seed"});';
+var kgConfigContent = 'modulex.config({ packages : { kg : { base : "//g.alicdn.com/kg/" }}});';
+var extraContent = ['',inferBaseCode,kgConfigContent].join('\n');
 
 function generateSeedJs() {
     var seedDebugJsContent = '',
@@ -16,16 +18,8 @@ function generateSeedJs() {
         seedJsContent += fs.readFileSync(miniFilePath).toString();
     }
 
-    seedDebugJsContent += getExtraContent();
-    seedJsContent += getExtraContent();
-
-    fs.writeFileSync(path.join(buildDir, 'seed-debug.js'), seedDebugJsContent + inferBaseCode);
-    fs.writeFileSync(path.join(buildDir, 'seed.js'), seedJsContent + inferBaseCode);
-}
-
-function getExtraContent(){
-    var kgConfigContent = '\nif( location !== undefined ){ modulex.config({ packages : { kg : { base : "//g.alicdn.com/kg/" } } }) }';
-    return kgConfigContent;
+    fs.writeFileSync(path.join(buildDir, 'seed-debug.js'), seedDebugJsContent + extraContent);
+    fs.writeFileSync(path.join(buildDir, 'seed.js'), seedJsContent + extraContent);
 }
 
 aggregateBower(bowerDir, buildDir);
