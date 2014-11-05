@@ -458,7 +458,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
         init: function (editor) {
             editor.docReady(function () {
                 // S.log("editor docReady for fix selection");
-                if (UA.ie) {
+                if (document.selection) {
                     fixCursorForIE(editor);
                     fixSelectionForIEWhenDocReady(editor);
                 } else {
