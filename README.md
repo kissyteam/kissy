@@ -20,6 +20,10 @@ bower install
 npm run build
 ```
 
+## Build your own modules
+
+https://github.com/kissyteam/kissy/blob/master/build-your-own-modules.md
+
 ## Modules
 
 [http://kissyteam.github.io/badgeboard/](http://kissyteam.github.io/badgeboard/)
