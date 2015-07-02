@@ -1,6 +1,0 @@
-<project name="attribute.build" default="build" basedir=".">
-    <property name="component.name" value="attribute"/>
-    <property name="component.isNode" value="1"/>
-    <import file="../common.xml"/>
-</project>
-

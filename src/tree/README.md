@@ -1,5 +1,0 @@
-# Tree Classes
-
-Tree Component
-
-

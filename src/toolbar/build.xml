@@ -1,5 +1,0 @@
-<project name="toolbar.build" default="build" basedir=".">
-    <property name="component.name" value="toolbar"/>
-    <import file="../dpl-css.xml"/>
-    <import file="../common.xml"/>
-</project>

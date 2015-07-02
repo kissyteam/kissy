@@ -1,5 +1,0 @@
-<project name="combobox/multi-word.build" default="build" basedir=".">
-    <property name="component.name" value="combobox/multi-word"/>
-    <import file="../../../common.xml"/>
-</project>
-

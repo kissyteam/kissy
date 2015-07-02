@@ -1,4 +1,0 @@
-# Button Class
-
-
-Button Component

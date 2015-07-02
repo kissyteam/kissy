@@ -1,6 +1,0 @@
-<project name="cookie.build" default="build" basedir=".">
-    <property name="component.name" value="cookie"/>
-
-    <import file="../common.xml"/>
-</project>
-

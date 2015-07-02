@@ -1,5 +1,10 @@
+build/
+bower_components/
+mx_modules/
+node_modules/
 nohup.out
 *.iml
+*.cfg
 .idea/
 .ipr
 .iws
@@ -16,6 +21,3 @@ Thumbs.db
 .svn/
 *.swp
 out/
-node_modules/
-tmp/
-reports/

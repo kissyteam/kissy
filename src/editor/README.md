@@ -1,3 +1,0 @@
-# Editor Class
-
-Editor Component

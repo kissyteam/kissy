@@ -1,5 +1,0 @@
-<project name="stylesheet.build" default="build" basedir=".">
-    <property name="component.name" value="stylesheet"/>
-
-    <import file="../common.xml"/>
-</project>

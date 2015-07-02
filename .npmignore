@@ -1,10 +1,7 @@
-src/
-build/
-tools/
-docs/
+bower_components/
+mx_modules/
 node_modules/
-reports/
-bin/tests/
+*.cfg
 nohup.out
 *.iml
 .idea/
@@ -22,5 +19,3 @@ Thumbs.db
 .*proj
 .svn/
 *.swp
-out/
-tmp/

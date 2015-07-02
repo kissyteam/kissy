@@ -1,6 +1,0 @@
-<project name="anim/timer.build" default="build" basedir=".">
-
-    <property name="component.name" value="anim/timer"/>
-
-    <import file="../../../common.xml"/>
-</project>

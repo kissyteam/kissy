@@ -1,3 +1,0 @@
-# Attribute Class
-
-Attribute Management

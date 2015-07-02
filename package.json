@@ -1,6 +1,6 @@
 {
     "name": "kissy",
-    "version": "5.0.0-alpha.4",
+    "version": "5.0.2",
     "description": "KISSY",
     "author": "yiminghe <yiminghe@gmail.com>",
     "homepage": "http://docs.kissyui.com",
@@ -18,52 +18,12 @@
         "kingfo <oicuicu@gmail.com>"
     ],
     "engines": {
-        "node": "~0.10"
-    },
-    "bin": {
-        "kissy-xtemplate": "./bin/xtemplate.js"
-    },
-    "directories": {
-        "lib": "./lib/"
+        "node": ">=0.10"
     },
     "scripts": {
-        "test": "node ./tools/test/jasmine-node",
-        "start": "node ./tools/server/start",
-        "stop": "node ./tools/server/stop"
+        "build": "node build"
     },
-    "devDependencies": {
-        "shelljs": "0.1.x",
-        "underscore": "1.4.x",
-        "cli": "0.4.x",
-        "minimatch": "0.x.x",
-        "console-browserify": "0.1.x",
-        "express": "3.3.4",
-        "request": "~2.27.0",
-        "jscs": "~1.0.15",
-        "recluster": "~0.3.6",
-        "debug": "~0.7.4",
-        "deps-optimizer": "~0.1",
-        "plato": "~1.0.1",
-        "mkdirp": "~0.5.0",
-        "kison": "*",
-        "node-jscover": "*",
-        "mime": "~1.2.11",
-        "jshint": "~2.5.1"
-    },
-    "dependencies": {
-        "estraverse": "~1.5.0",
-        "esprima": "~1.1.1",
-        "escodegen": "~1.3.2",
-        "iconv-lite": "~0.2.11",
-        "commander": "~2.2.0",
-        "walk": "~2.3.3",
-        "fs-extra": "~0.8.1",
-        "chokidar": "~0.8.2",
-        "logger-manager": "*"
-    },
-    "notes": [
-        "express 3.3.8-3.4.0 cors bug"
-    ],
+    "main": "./build/",
     "licenses": [
         {
             "type": "MIT",
@@ -73,5 +33,8 @@
     "repository": {
         "type": "git",
         "url": "http://github.com/kissyteam/kissy.git"
+    },
+    "devDependencies": {
+        "aggregate-bower": "^1.0.9"
     }
 }

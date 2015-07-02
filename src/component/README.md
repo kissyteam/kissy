@@ -1,4 +1,0 @@
-# Component Class
-
-Component infrastructure
-
