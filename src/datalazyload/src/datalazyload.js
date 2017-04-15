@@ -350,21 +350,28 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             var self = this,
                 containerRegion,
                 container = self.get('container'),
-                windowRegion;
-            // container is display none
-            if (self._containerIsNotDocument && !container.offsetWidth) {
-                return;
+                windowRegion,
+                userConfig = self.userConfig,
+                containers = [container];
+            // 兼容 1.2 传入数组
+            if (S.isArray(userConfig.container)) {
+                containers = userConfig.container;
             }
-            windowRegion = self['_getBoundingRect']();
-            // 兼容，不检测 container
-            if (!self._backCompact && self._containerIsNotDocument) {
-                containerRegion = self['_getBoundingRect'](self.get('container'));
-            }
-            self['_loadImgs'](windowRegion, containerRegion);
-            self['_loadTextAreas'](windowRegion, containerRegion);
-            self['_fireCallbacks'](windowRegion, containerRegion);
+            S.each(containers,function(container){
+                // container is display none
+                if (self._containerIsNotDocument && !container.offsetWidth) {
+                    return;
+                }
+                windowRegion = self['_getBoundingRect']();
+                // 兼容，不检测 container
+                if (!self._backCompact && self._containerIsNotDocument) {
+                    containerRegion = self['_getBoundingRect'](self.get('container'));
+                }
+                self['_loadImgs'](windowRegion, containerRegion);
+                self['_loadTextAreas'](windowRegion, containerRegion);
+                self['_fireCallbacks'](windowRegion, containerRegion);
+            });
         },
-
         /**
          * lazyload images
          * @private
